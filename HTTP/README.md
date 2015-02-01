@@ -14,3 +14,8 @@ java TestClientSocket www.cs.utexas.edu /
 This Java program demonstrates how to encode a string in Base64 format.
 The string to encode is currently hard coded in the program. Decoding functionality
 is currently not implemented.
+
+
+3) TestURLConnection.java:
+This Java program uses URLConnection class to open a connection to remote HTTP
+server whose URL is passed on the command line.
