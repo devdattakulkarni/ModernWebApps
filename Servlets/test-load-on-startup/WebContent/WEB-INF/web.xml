@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>Testing load-on-startup</display-name>
+  <servlet>
+    <servlet-name>testingLoadOnStartup1</servlet-name>
+    <servlet-class>TestingLoadOnStartup</servlet-class>
+    <!-- <load-on-startup>1</load-on-startup> -->
+    <init-param>
+    	<param-name>
+    	 Database
+    	</param-name>
+    	<param-value>
+    	 DB1
+    	</param-value>
+    </init-param> 
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>testingLoadOnStartup1</servlet-name>
+    <url-pattern>/loadOnStartup1</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>testingLoadOnStartup2</servlet-name>
+    <servlet-class>TestingLoadOnStartup</servlet-class>
+    <!--  <load-on-startup>1</load-on-startup>  -->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>testingLoadOnStartup2</servlet-name>
+    <url-pattern>/loadOnStartup2</url-pattern>
+  </servlet-mapping>
+  
+  <context-param>
+  	<param-name>password</param-name>
+  	<param-value>password1</param-value>
+  </context-param>
+  
+  	<context-param>
+  	<param-name>
+  	  url
+  	</param-name>
+  	<param-value>
+  	  url1
+  	</param-value>
+  	</context-param>
+  	 	
+</web-app>
