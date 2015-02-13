@@ -16,16 +16,16 @@ A HTTP client that works with TestServerSocket.java
 
 Setup Eclipse and Tomcat:
 
-Eclipse Java EE IDE for Web Developers.
-Version: Luna Release (4.4.0)
-Build id: 20140612-0600
++Eclipse Java EE IDE for Web Developers.
++Version: Luna Release (4.4.0)
++Build id: 20140612-0600
 
 Tomcat:
 
-Download Apache Tomcat 8.0.9
-Setup Eclipse to use Tomcat
-Eclipse -> Preferences -> Server -> Runtime Environments -> Add
-Page 35 of ``Java for Web Applications’’ book
++Download Apache Tomcat 8.0.9
++Setup Eclipse to use Tomcat
++Eclipse -> Preferences -> Server -> Runtime Environments -> Add
++Page 35 of ``Java for Web Applications’’ book
 
 
 Create a 'Servlet Project':
