@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>Filter Order Application</display-name>
+   
+  <filter>
+    <filter-name>filterA</filter-name>
+    <filter-class>FilterA</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>filterA</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+    <filter-name>filterC</filter-name>
+    <filter-class>FilterC</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>filterC</filter-name>
+    <url-pattern>/servletTwo</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>filterB</filter-name>
+    <filter-class>FilterB</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>filterB</filter-name>
+    <url-pattern>/servletTwo</url-pattern>
+    <url-pattern>/servletThree</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>ErrorHandler</filter-name>
+    <filter-class>ErrorHandler</filter-class>
+  </filter>  
+  <filter-mapping>
+    <filter-name>ErrorHandler</filter-name>
+    <url-pattern>/servletOne</url-pattern>
+  </filter-mapping>  
+</web-app>
