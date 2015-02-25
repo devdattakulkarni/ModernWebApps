@@ -10,9 +10,12 @@
     <mvc:annotation-driven />
 
     <bean name="emailController" class="EmailController">
-        <property name="editorService" ref="editorServiceImpl" />
+        <property name="spanishEditorService" ref="spanishEditorServiceImpl" />
+        <constructor-arg ref="englishEditorServiceImpl"></constructor-arg>
     </bean>
     
-    <bean name="editorServiceImpl" class="EnglishEditorServiceImpl" />
+    <bean name="englishEditorServiceImpl" class="EnglishEditorServiceImpl" />
+    
+    <bean name="spanishEditorServiceImpl" class="SpanishEditorServiceImpl" />
     
 </beans>

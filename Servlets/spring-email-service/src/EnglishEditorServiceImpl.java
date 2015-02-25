@@ -1,6 +1,6 @@
 public class EnglishEditorServiceImpl implements EditorService {
 
-	String name = "EnglishEditor";
+	String name = "English editor";
 	
 	public String composeEmail() {
 		return "Hello world.";
