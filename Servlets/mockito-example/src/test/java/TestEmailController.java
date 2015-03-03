@@ -10,7 +10,7 @@ public class TestEmailController {
 	EditorService mockEditor = null;
 	
 	@Before
-	public void setUp() {		
+	public void setUp1() {		
 		mockEditor = mock(EditorService.class);		
 		emailController.setEditorService(mockEditor);
 	}
@@ -34,12 +34,20 @@ public class TestEmailController {
 	}
 	
 	@Test
-	public void testGetGreetingCorrectActionLower() {
+	public void testGetGreetingCorrectActionCompose() {
 		when(mockEditor.composeEmail()).thenReturn("test email");
 		String reply = emailController.getGreeting("compose");
 		assertEquals("test email", reply);
+		verify(mockEditor).thisIsVoidFunction();
 	}
 	
+	@Test
+	public void testGetGreetingCorrectActionCreate() {
+		when(mockEditor.composeEmail()).thenReturn("test email");
+		String reply = emailController.getGreeting("create");
+		assertEquals("test email", reply);
+	}
+		
 	@Test
 	public void testGetGreetingCorrectActionCapital() {
 		when(mockEditor.composeEmail()).thenReturn("test email");
@@ -66,5 +74,5 @@ public class TestEmailController {
 		when(mockEditor.composeEmail()).thenReturn("test email");		
 		String reply = emailController.getWithGhostEditor();
 		assertEquals("test email", reply);		
-	}
+	}	
 }
