@@ -29,3 +29,10 @@ How to check (or set it)?
 - Choose "Add"
 - Choose "Java Build Path Entries"
 - Choose "Maven Dependencies"
+
+
+Example code from RESTful Java with JAX-RS 2.0 available at
+https://github.com/oreillymedia/restful_java_jax-rs_2_0
+
+Once you clone it and unzip the required file, the code examples are available in:
+/examples/oreilly-jaxrs-2.0-workbook/
