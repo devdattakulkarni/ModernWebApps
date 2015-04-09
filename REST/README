@@ -1,0 +1,38 @@
+Setting up and running the project in Eclipse.
+----------------------------------------------
+1) Import assignment4 project as follows:
+   - In "Package Explorer" view:
+     - Import -> Existing Projects into Workspace
+
+2) Build:
+   - Project -> Build Project
+
+3) Run on Server
+
+4) Try out following urls:
+   http://localhost:8080/assignment4/ut/courses
+
+   http://localhost:8080/assignment4/ut/helloworld
+
+
+On Error:
+----------
+
+Check that the "Java Build Path" for your project has Maven Dependencies set in the Deployment Assembly.
+
+How to check (or set it)?
+
+- Right click on project in the Package Explorer view
+- Choose "Build Path"
+- Choose "Configure Build Path"
+- Choose "Deployment Assembly"
+- Choose "Add"
+- Choose "Java Build Path Entries"
+- Choose "Maven Dependencies"
+
+
+Example code from RESTful Java with JAX-RS 2.0 available at
+https://github.com/oreillymedia/restful_java_jax-rs_2_0
+
+Once you clone it and unzip the required file, the code examples are available in:
+/examples/oreilly-jaxrs-2.0-workbook/

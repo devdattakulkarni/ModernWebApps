@@ -27,8 +27,10 @@ public class EmailController {
     public String getGreeting(@RequestParam("action") String action)
     {
 		String ret = "";
-		if (action != null && action.equalsIgnoreCase("compose")) {
+		if (action != null && action.equalsIgnoreCase("compose") ||
+				action.equalsIgnoreCase("create")) {
 			ret = editorService.composeEmail();
+			editorService.thisIsVoidFunction();
 		}
 		return ret;
     }
