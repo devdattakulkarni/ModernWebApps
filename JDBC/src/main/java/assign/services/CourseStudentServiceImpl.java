@@ -15,19 +15,24 @@ import assign.domain.Course;
 public class CourseStudentServiceImpl implements CourseStudentService {
 
 	String dbURL = "";
+	String dbUsername = "";
+	String dbPassword = "";
 	DataSource ds;
-	
-	public CourseStudentServiceImpl() {
-		// DB connection information would typically be read from a config file.
-		dbURL = "jdbc:mysql://localhost:3306/student_courses";
-		ds = setupDataSource(dbURL);
+
+	// DB connection information would typically be read from a config file.
+	public CourseStudentServiceImpl(String dbUrl, String username, String password) {
+		this.dbURL = dbUrl;
+		this.dbUsername = username;
+		this.dbPassword = password;
+		
+		ds = setupDataSource();
 	}
 	
-	public DataSource setupDataSource(String connectURI) {
+	public DataSource setupDataSource() {
         BasicDataSource ds = new BasicDataSource();
-        ds.setUsername("devdatta");
-        ds.setPassword("");
-        ds.setUrl(connectURI);
+        ds.setUsername(this.dbUsername);
+        ds.setPassword(this.dbPassword);
+        ds.setUrl(this.dbURL);
         return ds;
     }
 	
@@ -54,6 +59,10 @@ public class CourseStudentServiceImpl implements CourseStudentService {
         else {
             throw new SQLException("Creating course failed, no ID obtained.");
         }
+        
+        // Close the connection
+        conn.close();
+        
 		return c;
 	}
 
