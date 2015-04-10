@@ -33,6 +33,7 @@ public class CourseStudentServiceImpl implements CourseStudentService {
         ds.setUsername(this.dbUsername);
         ds.setPassword(this.dbPassword);
         ds.setUrl(this.dbURL);
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
         return ds;
     }
 	
