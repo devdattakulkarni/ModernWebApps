@@ -1,10 +1,13 @@
 package assign.domain;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +22,7 @@ public class Assignment {
 
     private String title;
     private Date date;
+    private UTCourse utcourse;
     
     public Assignment() {
     	// this form used by Hibernate
@@ -50,6 +54,16 @@ public class Assignment {
     public void setDate(Date date) {
 		this.date = date;
     }
+    
+    @ManyToOne
+    @JoinColumn(name="course_id")
+    public UTCourse getCourse() {
+    	return this.utcourse;
+    }
+    
+    public void setCourse(UTCourse c) {
+    	this.utcourse = c;
+    }
 
     public String getTitle() {
 		return title;
@@ -58,5 +72,4 @@ public class Assignment {
     public void setTitle(String title) {
 		this.title = title;
     }
-
 }

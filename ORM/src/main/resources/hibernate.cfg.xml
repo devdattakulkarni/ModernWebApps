@@ -53,6 +53,7 @@
                 
         <!-- Names the annotated entity class -->
         <mapping class="assign.domain.Assignment"/>
+        <mapping class="assign.domain.UTCourse"/>
 
     </session-factory>
 
