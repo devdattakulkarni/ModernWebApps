@@ -2,6 +2,7 @@ package assign.etl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,14 +14,24 @@ import org.hibernate.criterion.Restrictions;
 import assign.domain.Assignment;
 import assign.domain.UTCourse;
 
-public class ETLHandler {
+import java.util.logging.*;
+
+public class DBLoader {
 	private SessionFactory sessionFactory;
 	
-	public ETLHandler() {
+	Logger logger;
+	
+	public DBLoader() {
 		// A SessionFactory is set up once for an application
         sessionFactory = new Configuration()
                 .configure() // configures settings from hibernate.cfg.xml
                 .buildSessionFactory();
+        
+        logger = Logger.getLogger("EavesdropReader");
+	}
+	
+	public void loadData(Map<String, List<String>> data) {
+		logger.info("Inside loadData.");
 	}
 	
 	public Long addAssignment(String title) throws Exception {

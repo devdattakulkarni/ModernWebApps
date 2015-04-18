@@ -8,13 +8,13 @@ import org.junit.Test;
 import assign.domain.Assignment;
 import junit.framework.TestCase;
 
-public class TestETLHandler extends TestCase {
+public class TestDBLoader extends TestCase {
 
-	ETLHandler etlHandler;
+	DBLoader etlHandler;
 	
 	@Override
 	protected void setUp() {
-		etlHandler = new ETLHandler();
+		etlHandler = new DBLoader();
 	}
 	
 	@Test
