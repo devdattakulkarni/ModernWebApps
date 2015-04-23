@@ -4,8 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,7 +24,7 @@ public class Assignment {
 
     private String title;
     private Date date;
-    private UTCourse utcourse;
+    private UTCourse utcourse; // course or something else
     
     public Assignment() {
     	// this form used by Hibernate
@@ -34,8 +36,15 @@ public class Assignment {
     	this.date = date;
     }
     
-    @Id
-	@GeneratedValue(generator="increment")
+    public Assignment(String title, Date date, Long providedId) {
+    	// for application use, to create new events
+    	this.title = title;
+    	this.date = date;
+    	this.id = providedId;
+    }    
+    
+    @Id    
+	@GeneratedValue(generator="increment")    
 	@GenericGenerator(name="increment", strategy = "increment")
     public Long getId() {
 		return id;
@@ -57,9 +66,11 @@ public class Assignment {
     
     @ManyToOne
     @JoinColumn(name="course_id")
-    public UTCourse getCourse() {
+    public UTCourse getCourse() { // property named course available on this object
     	return this.utcourse;
     }
+    
+    
     
     public void setCourse(UTCourse c) {
     	this.utcourse = c;

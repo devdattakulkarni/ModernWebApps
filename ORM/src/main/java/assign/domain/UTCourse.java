@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -48,6 +50,7 @@ public class UTCourse {
     }
     
     @OneToMany(mappedBy="course")
+    @Cascade({CascadeType.DELETE})
     public Set<Assignment> getAssignments() {
     	return this.assignments;
     }

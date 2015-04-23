@@ -40,7 +40,7 @@ public class DBLoader {
 		Long assignmentId = null;
 		try {
 			tx = session.beginTransaction();
-			Assignment newAssignment = new Assignment( title, new Date() ); 
+			Assignment newAssignment = new Assignment( title, new Date(), new Long(1)); 
 			session.save(newAssignment);
 		    assignmentId = newAssignment.getId();
 		    tx.commit();
@@ -111,8 +111,18 @@ public class DBLoader {
 	public List<Assignment> getAssignmentsForACourse(Long courseId) throws Exception {
 		Session session = sessionFactory.openSession();		
 		session.beginTransaction();
-		String query = "from Assignment where course=" + courseId;		
+		String query = "from Assignment where course=" + courseId; // BAD PRACTICE
 		List<Assignment> assignments = session.createQuery(query).list();		
+		return assignments;
+	}
+	
+	public List<Object[]> getAssignmentsForACourse(String courseName) throws Exception {
+		Session session = sessionFactory.openSession();		
+		session.beginTransaction();
+		String query = "from Assignment a join a.course c where c.courseName = :cname";		
+				
+		List<Object[]> assignments = session.createQuery(query).setParameter("cname", courseName).list();
+		
 		return assignments;
 	}
 	
@@ -126,8 +136,60 @@ public class DBLoader {
 		
 		List<Assignment> assignments = criteria.list();
 		
-		return assignments.get(0);		
+		if (assignments.size() > 0) {
+			return assignments.get(0);			
+		} else {
+			return null;
+		}
 	}
+	
+	public UTCourse getCourse(String courseName) throws Exception {
+		Session session = sessionFactory.openSession();
+		
+		session.beginTransaction();
+		
+		Criteria criteria = session.createCriteria(UTCourse.class).
+        		add(Restrictions.eq("courseName", courseName));
+		
+		List<UTCourse> courses = criteria.list();
+		
+		if (courses.size() > 0) {
+			session.close();
+			return courses.get(0);	
+		} else {
+			session.close();
+			return null;
+		}
+	}
+	
+	public void deleteAssignment(String title) throws Exception {
+		
+		Session session = sessionFactory.openSession();		
+		session.beginTransaction();
+		String query = "from Assignment a where a.title = :title";		
+				
+		Assignment a = (Assignment)session.createQuery(query).setParameter("title", title).list().get(0);
+		
+        session.delete(a);
+
+        session.getTransaction().commit();
+        session.close();		
+	}
+	
+	public void deleteCourse(String courseName) throws Exception {
+		
+		Session session = sessionFactory.openSession();		
+		session.beginTransaction();
+		String query = "from UTCourse c where c.courseName = :courseName";		
+				
+		UTCourse c = (UTCourse)session.createQuery(query).setParameter("courseName", courseName).list().get(0);
+		
+        session.delete(c);
+
+        session.getTransaction().commit();
+        session.close();		
+	}
+	
 	
 	public Assignment getAssignment(Long assignmentId) throws Exception {
 		Session session = sessionFactory.openSession();

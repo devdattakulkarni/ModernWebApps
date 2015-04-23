@@ -6,25 +6,26 @@ import java.util.List;
 import org.junit.Test;
 
 import assign.domain.Assignment;
+import assign.domain.UTCourse;
 import junit.framework.TestCase;
 
 public class TestDBLoader extends TestCase {
 
-	DBLoader etlHandler;
+	DBLoader dbLoader;
 	
 	@Override
 	protected void setUp() {
-		etlHandler = new DBLoader();
+		dbLoader = new DBLoader();
 	}
 	
 	@Test
 	public void testAssignmentInsert() {
 		try {
 			String title = "HTTP Proxy Server";
-			Long assignmentId = etlHandler.addAssignment(title);
+			Long assignmentId = dbLoader.addAssignment(title);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = etlHandler.getAssignment(title);
+			Assignment proxyServer = dbLoader.getAssignment(title);
 			assertEquals(proxyServer.getTitle(), title);			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,10 +40,10 @@ public class TestDBLoader extends TestCase {
 		try {
 			String title = "ETL";
 			String courseTitle = "Modern Web Applications";
-			Long assignmentId = etlHandler.addAssignmentAndCourse(title, courseTitle);
+			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = etlHandler.getAssignment(title);
+			Assignment proxyServer = dbLoader.getAssignment(title);
 			assertEquals(proxyServer.getTitle(), title);			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,9 +57,9 @@ public class TestDBLoader extends TestCase {
 		assignments.add("Memory Subsystem");
 		assignments.add("Device Drivers");
 		String courseTitle = "Operating Systems";
-		Long courseId = etlHandler.addAssignmentsToCourse(assignments, courseTitle);
+		Long courseId = dbLoader.addAssignmentsToCourse(assignments, courseTitle);
 		
-		List<Assignment> a = etlHandler.getAssignmentsForACourse(courseId);
+		List<Assignment> a = dbLoader.getAssignmentsForACourse(courseId);
 		
 		System.out.println("Title: " + a.get(0).getTitle());
 		System.out.println("Title: " + a.get(1).getTitle());
@@ -69,16 +70,91 @@ public class TestDBLoader extends TestCase {
 	}
 	
 	@Test
-	public void testAssignmentGetWithId() {
+	public void testJoinQuery() {
 		try {
-			String title = "Servlets";
-			Long assignmentId = etlHandler.addAssignment(title);
-			System.out.println("Assignment ID:" + assignmentId);
+			List<String> assignments = new ArrayList<String>();
+			assignments.add("Memory Subsystem");
+			assignments.add("Device Drivers");
+			String courseTitle = "Operating Systems";
+			dbLoader.addAssignmentsToCourse(assignments, courseTitle);
+		
+			List<Object[]> tuples = dbLoader.getAssignmentsForACourse(courseTitle);
+		
+			System.out.println("Size of assignment list:" + tuples.size());
+		
+			for(int i=0; i<tuples.size(); i++) {
+				Object[] pair = tuples.get(i);
+				UTCourse course = null;
+				Assignment assignment = null;
 			
-			Assignment proxyServer = etlHandler.getAssignment(assignmentId);
-			assertEquals(proxyServer.getTitle(), title);			
+				if (pair[0] instanceof Assignment && pair[1] instanceof UTCourse) {
+					assignment = (Assignment)pair[0];
+					course = (UTCourse)pair[1];
+				} else if (pair[0] instanceof UTCourse && pair[1] instanceof Assignment) {
+					assignment = (Assignment)pair[1];
+					course = (UTCourse)pair[0];
+				}
+				System.out.println("Course:" + course.getCourseName() + " Assignment:" + assignment.getTitle());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
+	
+	@Test
+	public void testAssignmentGetWithId() {
+		try {
+			String title = "Servlets";
+			Long assignmentId = dbLoader.addAssignment(title);
+			System.out.println("Assignment ID:" + assignmentId);
+			
+			Assignment proxyServer = dbLoader.getAssignment(assignmentId);
+			assertEquals(proxyServer.getTitle(), title);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testAssignmentDelete() {
+		try {
+			String title = "Assignment 1";
+			dbLoader.addAssignment(title);
+			
+			Assignment proxyServer = dbLoader.getAssignment(title);
+			assertEquals(proxyServer.getTitle(), title);
+			
+			dbLoader.deleteAssignment(title);
+			
+			Assignment deletedAssignment = dbLoader.getAssignment(title);
+			
+			assertNull(deletedAssignment);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Test
+	public void testDeleteCourseAndAssignments() {
+		try {
+			String title = "ETL";
+			String courseTitle = "Modern Web Applications";
+			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
+			System.out.println("Assignment ID:" + assignmentId);
+			
+			Assignment proxyServer = dbLoader.getAssignment(title);
+			assertEquals(proxyServer.getTitle(), title);			
+			
+			dbLoader.deleteCourse(courseTitle);
+			
+			Assignment proxyServer1 = dbLoader.getAssignment(title);
+			assertNull(proxyServer1);
+			
+			UTCourse c = dbLoader.getCourse(courseTitle);
+			assertNull(c);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
