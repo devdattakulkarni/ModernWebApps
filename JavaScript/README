@@ -38,7 +38,7 @@ In our case:
 - artifactId is "assignment7"
 - version is "0.0.1-SNAPSHOT"
 
-Therefore, the context root is: ssignment7-0.0.1-SNAPSHOT
+Therefore, the context root is: assignment7-0.0.1-SNAPSHOT
 
 The reason you need to understand these steps is explained below.
 
