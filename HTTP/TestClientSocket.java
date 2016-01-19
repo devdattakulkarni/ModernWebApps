@@ -18,22 +18,21 @@ public class TestClientSocket {
 		FileOutputStream f = null;
 
 		try {
-		f = new FileOutputStream("serveroutput.txt");		     
+			f = new FileOutputStream("serveroutput.txt");		     
 
 			if (args.length < 2) {
 				System.out.println("Usage:");
-				System.out.println("java TestClientSocket <host> <port> <resource>");
+				System.out.println("java TestClientSocket <host> <resource>");
 				System.exit(0);
 			}
 			
 			String host = args[0];
-			String port = args[1];
-			String resource = args[2];
+			String resource = args[1];
 
-			int portToUse = Integer.valueOf(port.trim());
+			int portToUse = 80;
 			
 			client = new Socket(host, portToUse);
-                        client.setSoTimeout(1000);
+            client.setSoTimeout(1000);
 
 			OutputStream out = client.getOutputStream();
 			PrintWriter pout = new PrintWriter(out);
@@ -45,9 +44,7 @@ public class TestClientSocket {
 			InputStream in = client.getInputStream();
 			byte[] buffer = new byte[200];
 			int n = - 1;
-			
 
-			
 			while ( (n = in.read(buffer)) != -1)
 			{
 			    if (n > 0)
@@ -68,12 +65,12 @@ public class TestClientSocket {
 			}
 		}
 		catch (Exception e) {
-		    if (f != null) {
-			try {
-			    f.close();
+			if (f != null) {
+				try {
+					f.close();
 			} catch (Exception e1) {
-			    e1.printStackTrace();
-			}
+			    	e1.printStackTrace();
+				}
 		    }
 		}
 	}
