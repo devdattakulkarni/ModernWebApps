@@ -7,6 +7,7 @@ The responses received from the server is written to file named "serveroutput.tx
 It is also printed to standard out.
 
 Example usage:
+javac TestClientSocket.java
 java TestClientSocket www.cs.utexas.edu /
 
 
