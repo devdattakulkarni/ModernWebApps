@@ -1,0 +1,14 @@
+Eclipse tips:
+
+1) How to change Java font:
+   Preferences -> General -> Appearance -> Colors and Fonts -> Java Editor Text Font
+
+2) How to change console font:
+   Preferences -> General -> Appearance -> Colors and Fonts -> Debug -> Console font
+
+3) How to change size of Package explorer (on Mac OS X):
+   - Download and run TinkerTool (http://www.bresink.com/osx/TinkerTool.html)
+   - Change Help Tags
+
+4) How to change font size of xml files:
+   - Preferences -> General -> Appearance -> Colors and Fonts -> Text Font
