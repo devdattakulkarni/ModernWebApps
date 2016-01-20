@@ -27,7 +27,7 @@ Running examples from Eclipse:
 - Create a Java project
 - In Package Explorer, right click on the project name, choose "New File"
 - In the File explorer menu, select "Advanced" -> Link to file in the file system
-- Browse to the directory where you have clone the repo and select one
+- Browse to the directory where you have cloned the repo and select one
   of the above files.
 - Click Finish
 - Select "Run Configurations"
