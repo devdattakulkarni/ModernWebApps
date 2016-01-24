@@ -22,6 +22,29 @@ This Java program uses URLConnection class to open a connection to remote HTTP
 server whose URL is passed on the command line.
 
 
+4) TestUserAgentHeader.java:
+This Java program shows the effect of User-Agent request header on HTTP response.
+The User-Agent request header is controlled from the command-line.
+- If 'ua1' is passed as input for user agent, then the User-Agent header is set to 'BlackBerry',
+simulating the request as being made from a BlackBerry.
+
+- If 'ua2' is passed as input for user agent, then the User-Agent header is set to 'iPhone',
+simulating the request as being made from a iPhone.
+
+- If 'generic' is passed as input for user agent, the the User-Agent header is not set.
+
+The program creates output files corresponding to the value passed in for the user agent input
+parameter. The names of the files are ua1-test.html, ua2-test.html, generic-test.html.
+The file contains the response headers from the response. To observe these files from a
+web browser, open the file and delete all the headers from the top leaving the html content.
+Observe the file in the browser. 
+
+Example usage:
+java TestUserAgentHeader www.google.com / ua1
+java TestUserAgentHeader www.google.com / generic
+
+
+
 Running examples from Eclipse:
 
 - Create a Java project
