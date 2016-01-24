@@ -45,6 +45,22 @@ java TestUserAgentHeader www.google.com / generic
 
 
 
+5) RangeRequest.java:
+This program demonstrates the effect of Range request header on HTTP response.
+It takes in as input the range of bytes that you want to retrieve from a HTTP server for
+the specified HTTP resource. It saves the reply in rangerequest.txt.
+Note that the Range request header is respected by the HTTP server for a resource only
+if that server replies with "Accept-Ranges: " response header.
+
+Example usage:
+java RangeRequest www.utexas.edu / 0-30
+
+Above execution is requesting 31 bytes from http://www.utexas.edu/index.html
+
+
+
+
+
 Running examples from Eclipse:
 
 - Create a Java project
