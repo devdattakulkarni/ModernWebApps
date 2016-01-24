@@ -18,16 +18,23 @@ public class TestClientSocket {
 		FileOutputStream f = null;
 
 		try {
-			f = new FileOutputStream("serveroutput.txt");		     
 
-			if (args.length < 2) {
+			if (args.length < 3) {
 				System.out.println("Usage:");
-				System.out.println("java TestClientSocket <host> <resource>");
+				System.out.println("java TestClientSocket <host> <resource> <resource-type>");
+				System.out.println("<resource-type> options:<txt,png,jpeg>");
+				System.out.println("Examples:");
+				System.out.println("java TestClientSocket www.google.com / txt");
+				System.out.println("java TestClientSocket www.openstack.org /themes/openstack/images/customer-bestbuy.png png");
+				System.out.println("java TestClientSocket i.stack.imgur.com /UZ6ur.jpg jpg");
 				System.exit(0);
 			}
 			
 			String host = args[0];
 			String resource = args[1];
+			String outputType = args[2];
+			
+			f = new FileOutputStream("serveroutput." + outputType);			
 
 			int portToUse = 80;
 			

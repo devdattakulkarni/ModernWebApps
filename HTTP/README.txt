@@ -3,12 +3,17 @@ Examples in this directory:
 1) TestClientSocket.java:
 This Java program uses Socket class to open a HTTP 1.1 connection
 to a remote server whose name is passed on the command line.
-The responses received from the server is written to file named "serveroutput.txt".
+The responses received from the server is written to file named "serveroutput"
 It is also printed to standard out.
 
 Example usage:
 javac TestClientSocket.java
-java TestClientSocket www.cs.utexas.edu /
+
+- java TestClientSocket www.google.com / txt
+  Output will be written to serveroutput.txt
+
+- java TestClientSocket www.openstack.org /themes/openstack/images/customer-bestbuy.png png
+  Output will be written to serveroutput.png
 
 
 2) Base64EncodeDecode.java:
