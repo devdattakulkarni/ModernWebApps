@@ -1,8 +1,6 @@
 import java.io.IOException;
-import java.util.EnumSet;
 
 import javax.servlet.ServletException;
-import javax.servlet.SessionTrackingMode;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +21,6 @@ public class TestSession extends HttpServlet {
                         if ((cookieName != null && cookieName.equals("not-a-stranger-anymore")) 
                                         && cookieValue != null && cookieValue.equals("friend")) {
                                 response.getWriter().println("Hello, friend.");
-                                response.getWriter().println("Domain:" + ck.getDomain());
-                                response.getWriter().println("Path:" + ck.getPath());
                                 friend = true;
                         }
                 }
