@@ -1,0 +1,6 @@
+1) Unit test example in repose 
+
+https://github.com/rackerlabs/repose/blob/master/repose-aggregator/commons/utilities/src/main/java/org/openrepose/commons/utils/servlet/http/MutableHttpServletRequest.java
+
+https://github.com/rackerlabs/repose/blob/master/repose-aggregator/commons/utilities/src/test/java/org/openrepose/commons/utils/servlet/http/MutableHttpServletRequestTest.java
+
