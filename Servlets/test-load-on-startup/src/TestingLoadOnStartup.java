@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,32 +11,23 @@ import javax.servlet.ServletException;
 public class TestingLoadOnStartup extends HttpServlet {
         
         private static final long serialVersionUID = 1L;
-        
-        public TestingLoadOnStartup() {
-        	System.out.println("Inside the constructor.");
-        }
-        
-        public TestingLoadOnStartup(Map<String, String> map) {
-        	
-        }
-        
+        ServletContext sContext;
+                        
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) 
                         throws ServletException, IOException
         {
-                response.getWriter().println("TestLoadServlet.");        
-        }
-        
+                response.getWriter().println("TestLoadServlet.");
+                printServletContextParams(sContext);
+        }        
 
         @Override
         public void init(ServletConfig config) throws ServletException
-        {
-            //System.out.println("Servlet " + this.getServletName() + " has started.");
-        	
-        	System.out.println("Servlet " + config.getServletName() + " is being initialized.");
-            
-            printServletInitParams(config);
-            
+        {        	
+        		System.out.println("Servlet " + config.getServletName() + " is being initialized.");
+        		
+        		sContext = config.getServletContext();
+            printServletConfigParams(config);            
             printServletContextParams(config);                        
             
             for (int i=0; i<2; i++) {
@@ -55,24 +45,30 @@ public class TestingLoadOnStartup extends HttpServlet {
             System.out.println("Servlet " + this.getServletName() + " has stopped.");
         }
                 
-        private void printServletInitParams(ServletConfig config) {
+        private void printServletConfigParams(ServletConfig config) {
             Enumeration<String> initParams = config.getInitParameterNames();
-            System.out.println("Printing Servlet Init Params");
+            System.out.println("*** Servlet Init Params ***");
             while (initParams.hasMoreElements()) {
                 String param = initParams.nextElement();
                 String value = config.getInitParameter(param);
                 System.out.println("Param:" + param + " Value:" + value);
-            }        	
+            }
+            System.out.println("*** Servlet Init Params ***");            
         }
         
         private void printServletContextParams(ServletConfig config) {
             ServletContext servletContext = config.getServletContext();
+            printServletContextParams(servletContext);
+        }        
+        
+        private void printServletContextParams(ServletContext servletContext) {
             Enumeration<String> contextParams = servletContext.getInitParameterNames();
-            System.out.println("Printing Servlet Context Params");            
+            System.out.println("*** Servlet Context Params ***");            
             while(contextParams.hasMoreElements()) {
             	String param = contextParams.nextElement();
             	String value = servletContext.getInitParameter(param);
             	System.out.println("Param:" + param + " Value:" + value);            	
-            }            
-        }        
+            }
+            System.out.println("*** Servlet Context Params ***");            
+        }
 }
