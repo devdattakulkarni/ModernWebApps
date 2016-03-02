@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-
 public class JSoupServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -27,27 +26,28 @@ public class JSoupServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
                     throws ServletException, IOException
     {
+		PrintWriter w = response.getWriter();
 		String project = request.getParameter("project");
 		try {		    
-			String source = "http://eavesdrop.openstack.org/irclogs/" + project;	
-			Elements links = jsoupHandler.getElements(source);			
-		    ListIterator<Element> iter = links.listIterator();
-		    
-		    // Code path:
-		    while(iter.hasNext()) {
-		    		Element e = (Element) iter.next();
-		    		String s = e.html();
-		    		String responseString = "";
-		    		if ( s != null) {
-		    			s = s.replace("#", "%23");
-		    			responseString = source + s;
-		    		}
-		    		PrintWriter w = response.getWriter();
-		    	    w.println(responseString);
-		    }	    
+			String source = "http://eavesdrop.openstack.org/irclogs/%23" + project;	
+			Elements links = jsoupHandler.getElements(source);
+
+		    if (links != null) {
+			    ListIterator<Element> iter = links.listIterator();		    	
+			    while(iter.hasNext()) {
+		    			Element e = (Element) iter.next();
+		    			String s = e.html();
+		    			if ( s != null) {
+		    				w.println(s);		    			
+		    			}
+			    }	    
+		    }
+		    else {
+		    		w.println("Unknown project " + project);
+		    }
 		} catch (Exception exp) {
 			exp.printStackTrace();
-		}			
+		}	
     }
 	
 	public void setJSoupHandler(JSoupHandler jsoupHandler) {

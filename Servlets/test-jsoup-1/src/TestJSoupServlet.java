@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ListIterator;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +12,12 @@ import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TestJSoupServlet {
 	
 	JSoupServlet jsoupServlet = null;
+	Logger testLogger = Logger.getLogger("TestJSoupServlet");
 	
 	@Before
 	public void setUp() {
@@ -36,8 +37,7 @@ public class TestJSoupServlet {
 		ListIterator<Element> iter = mock(ListIterator.class);
 		Element e = mock(Element.class);
 		
-		// Set up expectations:
-		
+		// Set up expectations:		
 		String source = "http://eavesdrop.openstack.org/irclogs/heat";
 		
 		when(jsoupHandler.getElements(source)).thenReturn(list);		
@@ -55,7 +55,6 @@ public class TestJSoupServlet {
 		// Verify:
 		verify(response, never()).getWriter();
 		verify(pw, never()).println();
-		
 	}
 	
 	@Test
@@ -86,10 +85,8 @@ public class TestJSoupServlet {
 		jsoupServlet.doGet(request, response);
 		
 		// Verify:
-		verify(response, times(1)).getWriter();
-		
+		verify(response, times(1)).getWriter();		
 	}
-	
 	
 	@Test
 	public void testQueryHeatWorking() throws ServletException, IOException {
@@ -101,8 +98,29 @@ public class TestJSoupServlet {
 		
 		when(mockRequest.getParameter("project")).thenReturn("%23heat");		
 		jsoupServlet.doGet(mockRequest, mockResponse);		
-		verify(mockWriter, atLeastOnce()).println(anyString());
-		
+		verify(mockWriter, atLeastOnce()).println(anyString());		
 	}
-
+	
+	@Test
+	public void getMeetings() {
+		JSoupHandler jsoupHandler = new JSoupHandler();
+		
+		try {		    
+			String source = "http://eavesdrop.openstack.org/meetings/";	
+			Elements links = jsoupHandler.getElements(source);			
+		    ListIterator<Element> iter = links.listIterator();
+		    
+		    // Code path:
+		    while(iter.hasNext()) {
+		    		Element e = (Element) iter.next();
+		    		String s = e.html();
+		    		if ( s != null) {
+		    			s = s.replaceAll("\n", "");		    			
+		    			testLogger.info(s);
+		    		}
+		    }	    
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		}		
+	}
 }
