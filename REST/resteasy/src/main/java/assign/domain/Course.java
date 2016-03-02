@@ -1,10 +1,8 @@
 package assign.domain;
 
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "course")
-@XmlAccessorType
 public class Course {
 	
 	private String name;

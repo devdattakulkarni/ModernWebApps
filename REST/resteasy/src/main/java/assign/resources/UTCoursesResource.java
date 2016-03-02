@@ -3,6 +3,7 @@ package assign.resources;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,7 +20,7 @@ import assign.domain.Project;
 import assign.domain.Projects;
 import assign.services.EavesdropService;
 
-@Path("/ut")
+@Path("/listing")
 public class UTCoursesResource {
 	
 	EavesdropService eavesdropService;
@@ -55,9 +56,10 @@ public class UTCoursesResource {
 		operatingSystems.setName("Operating Systems");
 		
 		final Courses courses = new Courses();
-		courses.setEmployees(new ArrayList<Course>());		
-		courses.getCourses().add(modernWebApps);
-		courses.getCourses().add(operatingSystems);
+		List<Course> courseList = new ArrayList<Course>();
+		courseList.add(modernWebApps);
+		courseList.add(operatingSystems);
+		courses.setCourses(courseList);		
 			    
 	    return new StreamingOutput() {
 	         public void write(OutputStream outputStream) throws IOException, WebApplicationException {
@@ -110,6 +112,7 @@ public class UTCoursesResource {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(courses, os);
 		} catch (JAXBException jaxb) {
+			jaxb.printStackTrace();
 			throw new WebApplicationException();
 		}
 	}
