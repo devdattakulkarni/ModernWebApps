@@ -10,9 +10,12 @@ Setting up and running the project in Eclipse.
 3) Run on Server
 
 4) Try out following urls:
-   http://localhost:8080/assignment4/ut/courses
 
-   http://localhost:8080/assignment4/ut/helloworld
+   http://localhost:8080/resteasy/ut/listing/courses
+
+   http://localhost:8080/resteasy/ut/listing/helloworld
+
+   http://localhost:8080/resteasy/ut/listing/projects
 
 
 On Error:
