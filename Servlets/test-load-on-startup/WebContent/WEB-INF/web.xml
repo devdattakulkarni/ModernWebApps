@@ -4,7 +4,6 @@
   <servlet>
     <servlet-name>testingLoadOnStartup1</servlet-name>
     <servlet-class>TestingLoadOnStartup</servlet-class>
-    <!-- <load-on-startup>1</load-on-startup> -->
     <init-param>
     	<param-name>
     	 Database
@@ -13,6 +12,7 @@
     	 DB1
     	</param-value>
     </init-param> 
+    <load-on-startup>1</load-on-startup>
   </servlet>
   
   <servlet-mapping>
@@ -23,7 +23,7 @@
   <servlet>
     <servlet-name>testingLoadOnStartup2</servlet-name>
     <servlet-class>TestingLoadOnStartup</servlet-class>
-    <!--  <load-on-startup>1</load-on-startup>  -->
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>testingLoadOnStartup2</servlet-name>

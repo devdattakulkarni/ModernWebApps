@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>test-jsoup-1</groupId>
-  <artifactId>test-jsoup-1</artifactId>
+  <groupId>servlet-unit-test</groupId>
+  <artifactId>servlet-unit-test</artifactId>
   <version>1</version>
   <packaging>war</packaging>
   <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -25,20 +25,31 @@
       </plugin>
     </plugins>
   </build>
+  
+      <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jackson.version>2.3.1</jackson.version>
+        <log4j.version>2.0-rc1</log4j.version>
+        <spring.framework.version>4.0.1.RELEASE</spring.framework.version>
+    </properties>
+  
+  
   <dependencies>
+  
       <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.framework.version}</version>
+    </dependency>
+  
+  
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
-    </dependency>
-  
-	<dependency>
-  	<groupId>org.jsoup</groupId>
-  	<artifactId>jsoup</artifactId>
-  	<version>1.7.3</version>
-	</dependency>	
-	 <dependency>
-                <groupId>junit</groupId>
+    </dependency>    
+    <dependency>
+       <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
         </dependency>
@@ -46,6 +57,15 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.9.5</version>
-        </dependency>	
-  </dependencies>  
+        </dependency>
+    
+        <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+        </dependency>
+    
+    
+    
+  </dependencies>
 </project>

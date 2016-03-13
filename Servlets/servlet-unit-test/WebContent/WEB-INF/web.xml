@@ -5,15 +5,15 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>JSoup Example</display-name>
+    <display-name>Hello world servlet</display-name>
 
     <servlet>
-        <servlet-name>JSoup</servlet-name>
-        <servlet-class>JSoupServlet</servlet-class>
+        <servlet-name>hello-world-servlet</servlet-name>
+        <servlet-class>HelloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>JSoup</servlet-name>
-        <url-pattern>/testjsoup</url-pattern>
+        <servlet-name>hello-world-servlet</servlet-name>
+        <url-pattern>/helloworld</url-pattern>
     </servlet-mapping>
-    
+
 </web-app>

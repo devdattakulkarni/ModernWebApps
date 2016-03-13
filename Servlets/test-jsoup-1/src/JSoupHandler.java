@@ -14,7 +14,13 @@ public class JSoupHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    Elements links = doc.select("body a");
-	    return links;
+		if (doc != null) {
+			Elements links = doc.select("body a");
+		    return links;			
+		}
+		else {
+			return null;
+		}
+
 	}
 }
