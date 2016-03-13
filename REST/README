@@ -2,7 +2,7 @@ Setting up and running the project in Eclipse.
 ----------------------------------------------
 1) Import assignment4 project as follows:
    - In "Package Explorer" view:
-     - Import -> Existing Projects into Workspace
+     - Import -> Existing Maven Projects
 
 2) Build:
    - Project -> Build Project
