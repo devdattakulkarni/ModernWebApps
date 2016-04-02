@@ -37,4 +37,24 @@ public class TestCourseStudentServiceImpl {
 			e.printStackTrace();
 		}
 	}
+
+    @Test
+	public void testCourseGet() {
+	try {
+	    NewCourse c = new NewCourse();
+	    c.setName("Introduction to Computer Science.");
+	    c.setCourseNum("CS102");
+	    c = csService.addCourse(c);
+	    
+	    NewCourse c1 = csService.getCourse_correct(c.getCourseId());
+	    testLogger.info(c1.getName());
+	    testLogger.info(c1.getCourseNum());
+	    testLogger.info(String.valueOf(c1.getCourseId()));
+	    assertEquals(c1.getName(), c.getName());
+	    assertEquals(c1.getCourseNum(), c.getCourseNum());
+	    assertEquals(c1.getCourseId(), c.getCourseId());
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
 }

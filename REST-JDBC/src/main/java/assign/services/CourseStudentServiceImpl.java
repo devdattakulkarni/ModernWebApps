@@ -85,4 +85,23 @@ public class CourseStudentServiceImpl implements CourseStudentService {
 		return c;
 	}
 
+    public NewCourse getCourse_correct(int courseId) throws Exception {
+	String query = "select * from courses where course_id=?";
+	Connection conn = ds.getConnection();
+	PreparedStatement s = conn.prepareStatement(query);
+	s.setString(1, String.valueOf(courseId));
+
+	ResultSet r = s.executeQuery();
+	
+	if (!r.next()) {
+	    return null;
+	}
+	
+	NewCourse c = new NewCourse();
+	c.setCourseNum(r.getString("course_num"));
+	c.setName(r.getString("name"));
+	c.setCourseId(r.getInt("course_id"));
+	return c;
+    }
+
 }
