@@ -11,6 +11,7 @@ import assign.domain.NewCourse;
 public class TestCourseStudentServiceImpl {
 	
 	CourseStudentService csService = null;
+        Logger testLogger = Logger.getLogger("testlogger");
 	
 	@Before
 	public void setUp() {
