@@ -9,6 +9,6 @@ public interface CourseStudentService {
 	
 	public NewCourse getCourse(int courseId) throws Exception;
 
-        public NewCourse getCourse_correct(int courseId) throws Exception
+    public NewCourse getCourse_correct(int courseId) throws Exception;
 
 }
