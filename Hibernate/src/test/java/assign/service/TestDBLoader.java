@@ -25,8 +25,8 @@ public class TestDBLoader extends TestCase {
 			Long assignmentId = dbLoader.addAssignment(title);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = dbLoader.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);			
+			Assignment assignment = dbLoader.getAssignment(title);
+			assertEquals(assignment.getTitle(), title);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,8 +43,8 @@ public class TestDBLoader extends TestCase {
 			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = dbLoader.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);			
+			Assignment assignment = dbLoader.getAssignment(title);
+			assertEquals(assignment.getTitle(), title);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,8 +108,8 @@ public class TestDBLoader extends TestCase {
 			Long assignmentId = dbLoader.addAssignment(title);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = dbLoader.getAssignment(assignmentId);
-			assertEquals(proxyServer.getTitle(), title);			
+			Assignment assignment = dbLoader.getAssignment(assignmentId);
+			assertEquals(assignment.getTitle(), title);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,8 +121,8 @@ public class TestDBLoader extends TestCase {
 			String title = "Assignment 1";
 			dbLoader.addAssignment(title);
 			
-			Assignment proxyServer = dbLoader.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);
+			Assignment assignment = dbLoader.getAssignment(title);
+			assertEquals(assignment.getTitle(), title);
 			
 			dbLoader.deleteAssignment(title);
 			
@@ -143,13 +143,13 @@ public class TestDBLoader extends TestCase {
 			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
 			System.out.println("Assignment ID:" + assignmentId);
 			
-			Assignment proxyServer = dbLoader.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);			
+			Assignment assignment = dbLoader.getAssignment(title);
+			assertEquals(assignment.getTitle(), title);
 			
 			dbLoader.deleteCourse(courseTitle);
 			
-			Assignment proxyServer1 = dbLoader.getAssignment(title);
-			assertNull(proxyServer1);
+			Assignment assignment1 = dbLoader.getAssignment(title);
+			assertNull(assignment1);
 			
 			UTCourse c = dbLoader.getCourse(courseTitle);
 			assertNull(c);			
