@@ -14,8 +14,7 @@ public class Transformer {
 	}
 	
 	public Map<String, List<String>> transform(Map<String, List<String>> data) {
-		// Read the data;
-		// transform it as required;
+		// Transform the passed in data as required;
 		// return the transformed data;
 		
 		logger.info("Inside transform.");

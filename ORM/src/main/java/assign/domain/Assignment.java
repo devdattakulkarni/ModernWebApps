@@ -4,10 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -31,21 +30,22 @@ public class Assignment {
     }
     
     public Assignment(String title, Date date) {
-    	// for application use, to create new events
+    	// for application use, to create new assignment
     	this.title = title;
     	this.date = date;
     }
     
     public Assignment(String title, Date date, Long providedId) {
-    	// for application use, to create new events
+    	// for application use, to create new assignment
     	this.title = title;
     	this.date = date;
     	this.id = providedId;
     }    
     
     @Id    
-	@GeneratedValue(generator="increment")    
-	@GenericGenerator(name="increment", strategy = "increment")
+	//@GeneratedValue(generator="increment")    
+	//@GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId() {
 		return id;
     }

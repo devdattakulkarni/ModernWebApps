@@ -21,7 +21,7 @@ public class TestDBLoader extends TestCase {
 	@Test
 	public void testAssignmentInsert() {
 		try {
-			String title = "HTTP Proxy Server";
+			String title = "HTTP Proxy Server 1234";
 			Long assignmentId = dbLoader.addAssignment(title);
 			System.out.println("Assignment ID:" + assignmentId);
 			
