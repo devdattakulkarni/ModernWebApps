@@ -16,12 +16,8 @@
         <url-pattern>/session</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>session1</servlet-name>
-        <servlet-class>TestSession</servlet-class>
-    </servlet>    
     <servlet-mapping>
-        <servlet-name>session1</servlet-name>
+        <servlet-name>session</servlet-name>
         <url-pattern>/session1</url-pattern>
     </servlet-mapping>
     

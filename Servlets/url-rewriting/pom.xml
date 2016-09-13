@@ -6,6 +6,7 @@
   <packaging>war</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <finalName>url-rewriting</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
