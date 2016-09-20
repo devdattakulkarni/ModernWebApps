@@ -75,6 +75,38 @@ public class EmailController {
 	}	
 	
 	@ResponseBody
+    @RequestMapping(value = "/calculator", params = {"values", "operator"}, method=RequestMethod.GET)
+    public String calculator(@RequestParam("values") String values, @RequestParam("operator") String operator)
+    {
+		String ret = "";
+		if (values != null && operator != null) {
+			String vals [] = values.split(",");
+			long result = Long.parseLong(vals[0]);
+			for(int i=1; i<vals.length; i++) {
+				switch (operator) {
+					case "add":
+						result = result + Integer.parseInt(vals[i]);
+						break;
+					case "subtract":
+						result = result - Integer.parseInt(vals[i]);
+						break;
+					case "multiply":
+						result = result * Integer.parseInt(vals[i]);
+						break;
+					case "divide":
+						result = result / Integer.parseInt(vals[i]);
+						break;
+				}
+			}
+			ret = String.valueOf(result);
+		}
+		else {
+			return "Required parameters, values and operator, missing.";
+		}
+		return "Result is:" + ret;
+    }
+
+	@ResponseBody
     @RequestMapping(value = "/", params = {"action"}, method=RequestMethod.GET)
     public String getGreeting(@RequestParam("action") String action)
     {
