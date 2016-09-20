@@ -6,13 +6,13 @@
     <servlet-class>TestingLoadOnStartup</servlet-class>
     <init-param>
     	<param-name>
-    	 Database
+    	 Servlet_INIT_PARAM_NAME
     	</param-name>
     	<param-value>
-    	 DB1
+    	 Servlet_INIT_PARAM_VALUE
     	</param-value>
     </init-param> 
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   
   <servlet-mapping>
@@ -31,17 +31,13 @@
   </servlet-mapping>
   
   <context-param>
-  	<param-name>password</param-name>
-  	<param-value>password1</param-value>
+  	<param-name>Servlet_CONTEXT_PARAM_password</param-name>
+  	<param-value>Servlet_CONTEXT_PARAM_easytoguess</param-value>
   </context-param>
-  
-  	<context-param>
-  	<param-name>
-  	  url
-  	</param-name>
-  	<param-value>
-  	  url1
-  	</param-value>
-  	</context-param>
-  	 	
+
+  <context-param>
+  	<param-name>Servlet_CONTEXT_PARAM_username</param-name>
+  	<param-value>Servlet_CONTEXT_PARAM_root</param-value>
+  </context-param>
+    	 	
 </web-app>
