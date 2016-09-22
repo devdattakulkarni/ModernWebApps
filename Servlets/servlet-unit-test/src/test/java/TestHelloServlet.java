@@ -71,6 +71,14 @@ public class TestHelloServlet {
 		// Note that following does not work.
 		//Cookie c = new Cookie("user1", "user1");
 		//verify(response).addCookie(c);
-		
+	}
+	
+	@Test
+	public void testdoGet4() throws Exception {
+		JSoupService mockJSoupService = mock(JSoupService.class);
+		helloServlet.setJsoupservice(mockJSoupService);
+		when(mockJSoupService.getElements()).thenReturn(null);
+		int count = helloServlet.doGet4();
+		assertEquals(0, count);
 	}
 }
