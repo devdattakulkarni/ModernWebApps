@@ -7,6 +7,7 @@
   
   <build>
   	<sourceDirectory>src/main/java</sourceDirectory>
+  	<finalName>assignment3</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -61,7 +62,7 @@
 	<dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.1</version>
+        <version>4.12</version>
         <scope>test</scope>
     </dependency>
   </dependencies>
