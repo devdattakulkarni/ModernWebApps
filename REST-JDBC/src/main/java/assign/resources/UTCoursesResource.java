@@ -50,14 +50,7 @@ public class UTCoursesResource {
 		System.out.println("DBPassword:" + password);		
 		return "Hello world " + dburl + " " + username + " " + password;		
 	}
-	
-	@GET
-	@Path("/helloeavesdrop")
-	@Produces("text/html")
-	public String helloEavesdrop() {
-		return this.eavesdropService.getData();		
-	}	
-	
+		
 	@GET
 	@Path("/courses")
 	@Produces("application/xml")

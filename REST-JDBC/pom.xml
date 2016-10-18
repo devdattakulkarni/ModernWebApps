@@ -6,6 +6,7 @@
   <packaging>war</packaging>
   
   <build>
+    <finalName>resteasy-jdbc</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
       <plugin>
