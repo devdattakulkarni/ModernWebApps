@@ -23,12 +23,9 @@ import assign.domain.Project;
 import assign.domain.Projects;
 import assign.services.CourseStudentService;
 import assign.services.CourseStudentServiceImpl;
-import assign.services.EavesdropService;
 
 @Path("/listing")
 public class UTCoursesResource {
-	
-	EavesdropService eavesdropService;
 	
 	CourseStudentService courseStudentService;
 	String password;
