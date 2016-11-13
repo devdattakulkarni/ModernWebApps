@@ -51,7 +51,7 @@ public class DBLoader {
 			}
 		}
 		finally {
-			session.close();			
+			session.close();
 		}
 		return assignmentId;
 	}
@@ -76,7 +76,7 @@ public class DBLoader {
 			}
 		}
 		finally {
-			session.close();			
+			session.close();
 		}
 		return assignmentId;
 	}
@@ -103,7 +103,7 @@ public class DBLoader {
 			}
 		}
 		finally {
-			session.close();			
+			session.close();
 		}
 		return courseId;
 	}
@@ -112,16 +112,18 @@ public class DBLoader {
 		Session session = sessionFactory.openSession();		
 		session.beginTransaction();
 		String query = "from Assignment where course=" + courseId; // BAD PRACTICE
-		List<Assignment> assignments = session.createQuery(query).list();		
+		List<Assignment> assignments = session.createQuery(query).list();
+		session.close();
 		return assignments;
 	}
 	
 	public List<Object[]> getAssignmentsForACourse(String courseName) throws Exception {
-		Session session = sessionFactory.openSession();		
+		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		String query = "from Assignment a join a.course c where c.courseName = :cname";		
 				
 		List<Object[]> assignments = session.createQuery(query).setParameter("cname", courseName).list();
+		session.close();
 		
 		return assignments;
 	}
@@ -135,6 +137,8 @@ public class DBLoader {
         		add(Restrictions.eq("title", title));
 		
 		List<Assignment> assignments = criteria.list();
+		
+		session.close();
 		
 		if (assignments.size() > 0) {
 			return assignments.get(0);			
@@ -173,7 +177,7 @@ public class DBLoader {
         session.delete(a);
 
         session.getTransaction().commit();
-        session.close();		
+        session.close();
 	}
 	
 	public void deleteCourse(String courseName) throws Exception {
@@ -187,7 +191,7 @@ public class DBLoader {
         session.delete(c);
 
         session.getTransaction().commit();
-        session.close();		
+        session.close();
 	}
 	
 	
@@ -200,6 +204,8 @@ public class DBLoader {
         		add(Restrictions.eq("id", assignmentId));
 		
 		List<Assignment> assignments = criteria.list();
+		
+		session.close();
 		
 		return assignments.get(0);		
 	}

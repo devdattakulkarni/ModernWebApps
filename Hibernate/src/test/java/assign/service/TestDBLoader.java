@@ -11,11 +11,10 @@ import junit.framework.TestCase;
 
 public class TestDBLoader extends TestCase {
 
-	DBLoader dbLoader;
+	DBLoader dbLoader = new DBLoader();
 	
 	@Override
 	protected void setUp() {
-		dbLoader = new DBLoader();
 	}
 	
 	@Test
@@ -31,15 +30,12 @@ public class TestDBLoader extends TestCase {
 			e.printStackTrace();
 		}
 	}
-		
-	public void testUpdate() {
-	}
 	
 	@Test
 	public void testAssignmentAndCourseInsert() {
 		try {
 			String title = "ETL";
-			String courseTitle = "Modern Web Applications";
+			String courseTitle = "Modern Web Applications 1";
 			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
 			System.out.println("Assignment ID:" + assignmentId);
 			
@@ -138,8 +134,8 @@ public class TestDBLoader extends TestCase {
 	@Test
 	public void testDeleteCourseAndAssignments() {
 		try {
-			String title = "ETL";
-			String courseTitle = "Modern Web Applications";
+			String title = "ETL 2";
+			String courseTitle = "Modern Web Applications 2";
 			Long assignmentId = dbLoader.addAssignmentAndCourse(title, courseTitle);
 			System.out.println("Assignment ID:" + assignmentId);
 			
@@ -152,7 +148,7 @@ public class TestDBLoader extends TestCase {
 			assertNull(assignment1);
 			
 			UTCourse c = dbLoader.getCourse(courseTitle);
-			assertNull(c);			
+			assertNull(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -33,8 +33,8 @@
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/student_courses</property>
-        <property name="connection.username">devdatta</property>
-        <property name="connection.password"></property>
+        <property name="connection.username">devdatta1</property>
+        <property name="connection.password">password</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
