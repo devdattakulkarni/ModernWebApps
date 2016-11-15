@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-@Path("/helloworld")
+@Path("/path")
 public class HelloWorldResource {
 	
 	public HelloWorldResource() {
@@ -12,7 +12,7 @@ public class HelloWorldResource {
 	}
 	
 	@GET
-	@Path("/helloworld")
+	@Path("/helloworld-resource")
 	@Produces("text/html")
 	public String helloWorld() {
 		System.out.println("Inside helloworld");

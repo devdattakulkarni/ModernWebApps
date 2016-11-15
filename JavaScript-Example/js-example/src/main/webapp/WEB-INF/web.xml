@@ -18,6 +18,6 @@
  
     <servlet-mapping>
         <servlet-name>Resteasy</servlet-name>
-        <url-pattern>/js</url-pattern>
+        <url-pattern>/app</url-pattern>
     </servlet-mapping>
 </web-app>

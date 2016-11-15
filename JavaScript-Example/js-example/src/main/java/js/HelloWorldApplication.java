@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/js")
+@ApplicationPath("/app")
 public class HelloWorldApplication extends Application {
 
 	private Set<Object> singletons = new HashSet<Object>();

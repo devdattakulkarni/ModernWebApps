@@ -37,6 +37,7 @@
     </dependencies>
   
   <build>
+  <finalName>js-example</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
