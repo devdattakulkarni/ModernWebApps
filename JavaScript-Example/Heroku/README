@@ -1,0 +1,33 @@
+Deploying web app on Heroku (PaaS approach)
+
+1. Signup for a Heroku Account
+- https://www.heroku.com/
+
+2. Install Heroku CLI
+- https://devcenter.heroku.com/articles/heroku-command-line
+
+3. Copy Procfile, pom.xml, and system.properties from Heroku folder inside JavaScript-Example to js-example/
+
+4. Copy js-example to a temporary folder
+- cp js-example /tmp/.
+
+5. Switch to the js-example folder in the temporary location
+- cd /tmp/js-example
+
+6. Setup up application on Heroku
+- heroku create <unique-app-name>
+
+7. Initialize the application with source code
+- git init
+- git add .
+- git commit -m “Deploying app to Heroku”
+
+8. Deploy to Heroku
+- git push heroku master
+
+9. Test the application
+-  https://<unique-app-name>.herokuapp.com/test.html
+-  https://<unique-app-name>.herokuapp.com/ajaxexample.html
+
+References:
+- https://devcenter.heroku.com/articles/deploy-a-java-web-application-that-launches-with-jetty-runner
