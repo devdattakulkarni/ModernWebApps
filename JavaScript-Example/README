@@ -17,6 +17,10 @@ This html file contains JavaScript code which makes AJAX call to the REST API,
 which is available at:
 http://localhost:<port>/<context-root>/app/path/helloworld-resource
 
+Note: When deploying this app in Eclipse, change the 'context-root' to '/'
+The default context root of 'js-example' will not work as ajaxexample.html
+makes calls to the REST API that is assumed to be running with context-root of '/'. 
+
 
 Using mvn to build the project:
 ----------------------------------
