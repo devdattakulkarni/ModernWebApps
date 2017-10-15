@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.StreamingOutput;
@@ -19,16 +20,29 @@ import assign.domain.Courses;
 import assign.domain.Project;
 import assign.domain.Projects;
 import assign.services.EavesdropService;
+import assign.services.EavesdropServiceImpl;
 
 @Path("/listing")
 public class UTCoursesResource {
 	
+	// Placeholder for eavesdrop service;
 	EavesdropService eavesdropService;
 	
+	// Example course that will be returned;
+	Course course1;
+	
 	public UTCoursesResource() {
-		this.eavesdropService = new EavesdropService();
+		this.eavesdropService = new EavesdropServiceImpl();
+		this.course1 = new Course();
+		this.course1.setDepartment("CS");
+		this.course1.setName("CS 101");
 	}
 	
+	// Use this for unit testing
+	protected void setEavesdropService(EavesdropService eavesdropService) {
+		this.eavesdropService = eavesdropService;
+	}
+
 	@GET
 	@Path("/helloworld")
 	@Produces("text/html")
@@ -41,10 +55,41 @@ public class UTCoursesResource {
 	@Produces("text/html")
 	public String helloEavesdrop() {
 		return this.eavesdropService.getData();		
-	}	
+	}
+	
+	@GET
+	@Path("/courses/{course_id}")
+	@Produces("application/xml")
+	public Course getCourse(@PathParam("course_id") String course_id) {
+		
+		// This method uses resteasy's JAXB provider for marshalling the response
+		
+		return this.course1;
+	}
 	
 	@GET
 	@Path("/courses")
+	@Produces("application/xml")
+	public Courses getCourses() {
+		Course modernWebApps = new Course();
+		modernWebApps.setDepartment("CS");
+		modernWebApps.setName("Modern Web Applications");
+		
+		Course operatingSystems = new Course();
+		operatingSystems.setDepartment("CS");
+		operatingSystems.setName("Operating Systems");
+		
+		final Courses courses = new Courses();
+		List<Course> courseList = new ArrayList<Course>();
+		courseList.add(modernWebApps);
+		courseList.add(operatingSystems);
+		courses.setCourseList(courseList);
+
+		return courses;
+	}
+	
+	@GET
+	@Path("/courses1")
 	@Produces("application/xml")
 	public StreamingOutput getAllCourses() throws Exception {
 		Course modernWebApps = new Course();
@@ -59,13 +104,13 @@ public class UTCoursesResource {
 		List<Course> courseList = new ArrayList<Course>();
 		courseList.add(modernWebApps);
 		courseList.add(operatingSystems);
-		courses.setCourses(courseList);		
-			    
+		courses.setCourseList(courseList);
+		
 	    return new StreamingOutput() {
 	         public void write(OutputStream outputStream) throws IOException, WebApplicationException {
 	            outputCourses(outputStream, courses);
 	         }
-	      };	    
+	      }; 
 	}
 	
 	@GET
@@ -82,7 +127,7 @@ public class UTCoursesResource {
 			    
 	    return new StreamingOutput() {
 	         public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-	            outputCourses(outputStream, projects);
+	            outputProjects(outputStream, projects);
 	         }
 	      };	    
 	}	
@@ -117,7 +162,7 @@ public class UTCoursesResource {
 		}
 	}
 	
-	protected void outputCourses(OutputStream os, Projects projects) throws IOException {
+	protected void outputProjects(OutputStream os, Projects projects) throws IOException {
 		try { 
 			JAXBContext jaxbContext = JAXBContext.newInstance(Projects.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
