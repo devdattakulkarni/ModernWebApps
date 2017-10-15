@@ -1,9 +1,5 @@
 package assign.services;
 
-public class EavesdropService {
-
-	public String getData() {
-		return "Hello from Eavesdrop service.";
-	}
-	
+public interface EavesdropService {
+	public String getData();
 }

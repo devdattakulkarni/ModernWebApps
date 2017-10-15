@@ -5,17 +5,17 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "courses")
+@XmlRootElement(name = "abc")
 @XmlAccessorType
 public class Courses {
 
-    private List<Course> courses = null;
- 
-    public List<Course> getCourses() {
-        return courses;
+    private List<Course> courseList = null;
+
+    public List<Course> getCourseList() {
+        return courseList;
     }
  
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCourseList(List<Course> courses) {
+        this.courseList = courses;
     }	
 }

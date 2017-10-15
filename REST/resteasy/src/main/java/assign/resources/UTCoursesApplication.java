@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import assign.services.EavesdropService;
 
 @ApplicationPath("/ut")
 public class UTCoursesApplication extends Application {
