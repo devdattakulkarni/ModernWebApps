@@ -30,20 +30,22 @@ Setting up database:
    - /usr/local/mysql/bin/mysql -u root
 
 2) Create Database
-   - create database student_courses;
+   - create database if not exists student_courses;
 
 3) Create User
-   - Example: create user 'devdatta'@'localhost’;
+   - Example: create user 'devdatta3'@'localhost’ identified by 'devdatta3';
 
 4) Grant Privileges
-   GRANT ALL ON student_courses.* TO ‘devdatta’@’localhost’;
+   GRANT ALL ON student_courses.* TO ‘devdatta3’@’localhost’;
 
 5) Logout 
    - On mysql prompt: “quit”
 
 6) Login as user;
-   - /usr/local/mysql/bin/mysql –u devdatta –h localhost
+   - /usr/local/mysql/bin/mysql –h localhost --user=devdatta3 --password=devdatta3
 
 7) Create Table
+   - show databases;
    - use student_courses;
+   - show tables;
    - create table courses(name varchar(255) NOT NULL, course_num varchar(20) NOT NULL, course_id int NOT NULL AUTO_INCREMENT, PRIMARY KEY(course_id));
