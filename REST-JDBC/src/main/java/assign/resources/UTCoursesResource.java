@@ -67,7 +67,7 @@ public class UTCoursesResource {
 	
 	@POST
 	@Consumes("application/xml")
-	public Response createCustomer(InputStream is) throws Exception {
+	public Response createCourse(InputStream is) throws Exception {
 	      NewCourse newCourse = readNewCourse(is);
 	      newCourse = this.courseStudentService.addCourse(newCourse);
 	      return Response.created(URI.create("/courses/" + newCourse.getCourseId())).build();
