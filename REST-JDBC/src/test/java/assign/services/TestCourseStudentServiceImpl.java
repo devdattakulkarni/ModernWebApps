@@ -18,8 +18,8 @@ public class TestCourseStudentServiceImpl {
 	@Before
 	public void setUp() {
 		String dburl = "jdbc:mysql://localhost:3306/student_courses";
-		String dbusername = "devdatta";
-		String dbpassword = "";
+		String dbusername = "devdatta3";
+		String dbpassword = "devdatta3";
 		csService = new CourseStudentServiceImpl(dburl, dbusername, dbpassword);
 	}
 	

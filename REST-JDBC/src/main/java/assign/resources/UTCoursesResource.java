@@ -1,23 +1,35 @@
 package assign.resources;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import assign.domain.Course;
 import assign.domain.Courses;
+import assign.domain.NewCourse;
 import assign.domain.NotFound;
 import assign.domain.Project;
 import assign.domain.Projects;
@@ -31,9 +43,11 @@ public class UTCoursesResource {
 	String password;
 	String username;
 	String dburl;	
-	
+	String dbhost, dbname;
 	public UTCoursesResource(@Context ServletContext servletContext) {
-		dburl = servletContext.getInitParameter("DBURL");
+		dbhost = servletContext.getInitParameter("DBHOST");
+		dbname = servletContext.getInitParameter("DBNAME");
+		dburl = "jdbc:mysql://" + dbhost + ":3306/" + dbname;
 		username = servletContext.getInitParameter("DBUSERNAME");
 		password = servletContext.getInitParameter("DBPASSWORD");
 		this.courseStudentService = new CourseStudentServiceImpl(dburl, username, password);		
@@ -49,6 +63,14 @@ public class UTCoursesResource {
 		System.out.println("DBUsername:" + username);
 		System.out.println("DBPassword:" + password);		
 		return "Hello world " + dburl + " " + username + " " + password;		
+	}
+	
+	@POST
+	@Consumes("application/xml")
+	public Response createCustomer(InputStream is) throws Exception {
+	      NewCourse newCourse = readNewCourse(is);
+	      newCourse = this.courseStudentService.addCourse(newCourse);
+	      return Response.created(URI.create("/courses/" + newCourse.getCourseId())).build();
 	}
 		
 	@GET
@@ -170,4 +192,27 @@ public class UTCoursesResource {
 			throw new WebApplicationException();
 		}
 	}	
+	
+	protected NewCourse readNewCourse(InputStream is) {
+		      try {
+		         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		         Document doc = builder.parse(is);
+		         Element root = doc.getDocumentElement();
+		         NewCourse course = new NewCourse();
+		         NodeList nodes = root.getChildNodes();
+		         for (int i = 0; i < nodes.getLength(); i++) {
+		            Element element = (Element) nodes.item(i);
+		            if (element.getTagName().equals("name")) {
+		               course.setName(element.getTextContent());
+		            }
+		            else if (element.getTagName().equals("course_num")) {
+		               course.setCourseNum(element.getTextContent());
+		            }
+		         }
+		         return course;
+		      }
+		      catch (Exception e) {
+		         throw new WebApplicationException(e, Response.Status.BAD_REQUEST);
+		      }
+		   }
 }
