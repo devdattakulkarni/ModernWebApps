@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
 import assign.domain.Assignment;
+import assign.domain.Homework;
 import assign.domain.UTCourse;
 
 import java.util.logging.*;
@@ -27,12 +28,35 @@ public class DBLoader {
                 .configure() // configures settings from hibernate.cfg.xml
                 .buildSessionFactory();
         
-        logger = Logger.getLogger("EavesdropReader");
+        logger = Logger.getLogger("DBLoader");
 	}
 	
 	public void loadData(Map<String, List<String>> data) {
 		logger.info("Inside loadData.");
 	}
+	
+	public Long addCourse(String courseName) throws Exception {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		Long courseId = null;
+		try {
+			tx = session.beginTransaction();
+			UTCourse newCourse = new UTCourse(courseName); 
+			session.save(newCourse);
+		    courseId = newCourse.getId();
+		    tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+				throw e;
+			}
+		}
+		finally {
+			session.close();
+		}
+		return courseId;
+	}
+
 	
 	public Long addAssignment(String title) throws Exception {
 		Session session = sessionFactory.openSession();
@@ -54,6 +78,31 @@ public class DBLoader {
 			session.close();
 		}
 		return assignmentId;
+	}
+	
+	public Long addHomeworkForCourse(String title, Long courseId) throws Exception {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		Long homeworkId = null;
+		try {
+			tx = session.beginTransaction();
+			Homework homework = new Homework(title);
+			Criteria criteria = session.createCriteria(UTCourse.class).add(Restrictions.eq("id", courseId));
+			List<UTCourse> courseList = criteria.list();
+			homework.setCourse(courseList.get(0));
+			session.save(homework);
+			homeworkId = homework.getId();
+		    tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+				throw e;
+			}
+		}
+		finally {
+			session.close();
+		}
+		return homeworkId;
 	}
 	
 	public Long addAssignmentAndCourse(String title, String courseTitle) throws Exception {
@@ -165,7 +214,39 @@ public class DBLoader {
 			return null;
 		}
 	}
+
+	public Homework getHomework_using_get(Long homeworkId) throws Exception {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Homework h = (Homework)session.get(Homework.class, homeworkId);
+		session.close();
+		return h;		
+	}
+
+	public Homework getHomework_using_load(Long homeworkId) throws Exception {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Homework h = (Homework)session.load(Homework.class, homeworkId);
+		session.close();
+		return h;		
+	}
 	
+	public Homework getHomework_using_criteria(Long homeworkId) throws Exception {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Criteria criteria = session.createCriteria(Homework.class).
+        		add(Restrictions.eq("id", homeworkId));
+		List<Homework> homeworks = criteria.list();
+		if (homeworks.size() > 0) {
+			session.close();
+			return homeworks.get(0);	
+		} else {
+			session.close();
+			return null;
+		}
+	}
+	
+
 	public void deleteAssignment(String title) throws Exception {
 		
 		Session session = sessionFactory.openSession();		

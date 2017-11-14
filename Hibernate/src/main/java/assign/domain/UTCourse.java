@@ -40,7 +40,7 @@ public class UTCourse {
 		this.id = id;
     }
     
-    @Column(name="course")
+    @Column(name="course_name")
     public String getCourseName() {
 		return courseName;
     }
