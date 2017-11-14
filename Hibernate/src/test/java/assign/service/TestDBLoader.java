@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 
 import assign.domain.Assignment;
+import assign.domain.Homework;
 import assign.domain.UTCourse;
 import junit.framework.TestCase;
 
@@ -15,6 +16,20 @@ public class TestDBLoader extends TestCase {
 	
 	@Override
 	protected void setUp() {
+	}
+
+	@Test
+	public void testHomeworkInsert() {
+		try {
+			String courseName = "Modern Web Apps";
+			Long courseId = dbLoader.addCourse(courseName);
+			String homeworkTitle = "Hibernate";
+			Long homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
+			Homework homework = dbLoader.getHomework_using_get(homeworkId);
+			assertEquals(homeworkId, homework.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
