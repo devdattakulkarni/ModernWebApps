@@ -13,8 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
 @Table( name = "assignments" )
 public class Assignment {
@@ -66,13 +64,13 @@ public class Assignment {
     
     @ManyToOne
     @JoinColumn(name="course_id")
-    public UTCourse getCourse() { // property named course available on this object
+    public UTCourse getUtcourse() {
     	return this.utcourse;
     }
     
     
     
-    public void setCourse(UTCourse c) {
+    public void setUtcourse(UTCourse c) {
     	this.utcourse = c;
     }
 

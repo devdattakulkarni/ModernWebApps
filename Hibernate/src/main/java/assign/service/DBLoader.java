@@ -113,7 +113,7 @@ public class DBLoader {
 			tx = session.beginTransaction();
 			Assignment newAssignment = new Assignment( title, new Date() );
 			UTCourse course = new UTCourse(courseTitle);
-			newAssignment.setCourse(course);
+			newAssignment.setUtcourse(course);
 			session.save(course);
 			session.save(newAssignment);
 		    assignmentId = newAssignment.getId();
@@ -141,7 +141,7 @@ public class DBLoader {
 			courseId = course.getId();
 			for(String a : assignments) {
 				Assignment newAssignment = new Assignment( a, new Date() );
-				newAssignment.setCourse(course);
+				newAssignment.setUtcourse(course);
 				session.save(newAssignment);
 			}
 		    tx.commit();
@@ -226,8 +226,16 @@ public class DBLoader {
 	public Homework getHomework_using_load(Long homeworkId) throws Exception {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Homework h = (Homework)session.load(Homework.class, homeworkId);
-		session.close();
+		Homework h = null;
+		try {
+		h = (Homework)session.load(Homework.class, homeworkId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 		return h;		
 	}
 	
