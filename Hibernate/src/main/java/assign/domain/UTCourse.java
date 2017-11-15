@@ -49,7 +49,7 @@ public class UTCourse {
 		this.courseName = courseName;
     }
     
-    @OneToMany(mappedBy="course")
+    @OneToMany(mappedBy="utcourse")
     @Cascade({CascadeType.DELETE})
     public Set<Assignment> getAssignments() {
     	return this.assignments;

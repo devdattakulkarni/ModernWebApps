@@ -19,19 +19,74 @@ public class TestDBLoader extends TestCase {
 	}
 
 	@Test
-	public void testHomeworkInsert() {
+	public void testHomeworkInsert_retrieve_with_load1() throws Exception {
+		Homework homework = null;
+		Long homeworkId = 0L;
 		try {
 			String courseName = "Modern Web Apps";
 			Long courseId = dbLoader.addCourse(courseName);
 			String homeworkTitle = "Hibernate";
-			Long homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
-			Homework homework = dbLoader.getHomework_using_get(homeworkId);
-			assertEquals(homeworkId, homework.getId());
+			homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
+			homework = dbLoader.getHomework_using_load(homeworkId);
+			assertNotNull(homework.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
+		assertEquals(homeworkId, homework.getId());
 	}
-	
+
+	public void testHomeworkInsert_retrieve_with_load2() throws Exception {
+		Homework homework = null;
+		Long homeworkId = 0L;
+		try {
+			String courseName = "Modern Web Apps";
+			Long courseId = dbLoader.addCourse(courseName);
+			String homeworkTitle = "Hibernate";
+			homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
+			homework = dbLoader.getHomework_using_load(new Long(12345));
+			assertNotNull(homework.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		assertEquals(homeworkId, homework.getId());
+	}
+
+	public void testHomeworkInsert_retrieve_with_get1() throws Exception {
+		Homework homework = null;
+		Long homeworkId = 0L;
+		try {
+			String courseName = "Modern Web Apps";
+			Long courseId = dbLoader.addCourse(courseName);
+			String homeworkTitle = "Hibernate";
+			homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
+			homework = dbLoader.getHomework_using_get(homeworkId);
+			assertNotNull(homework.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		assertEquals(homeworkId, homework.getId());
+	}
+
+	public void testHomeworkInsert_retrieve_with_get2() throws Exception {
+		Homework homework = null;
+		Long homeworkId = 0L;
+		try {
+			String courseName = "Modern Web Apps";
+			Long courseId = dbLoader.addCourse(courseName);
+			String homeworkTitle = "Hibernate";
+			homeworkId = dbLoader.addHomeworkForCourse(homeworkTitle, courseId);
+			homework = dbLoader.getHomework_using_get(new Long(12345));
+			assertNotNull(homework.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		assertEquals(homeworkId, homework.getId());
+	}
+
 	@Test
 	public void testAssignmentInsert() {
 		try {
