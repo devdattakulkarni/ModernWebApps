@@ -10,7 +10,7 @@ public class HelloWorldResource {
 	public HelloWorldResource() {
 		
 	}
-	
+
 	@GET
 	@Path("/helloworld-resource")
 	@Produces("text/html")
@@ -18,4 +18,13 @@ public class HelloWorldResource {
 		System.out.println("Inside helloworld");
 		return "Hello world ";
 	}
+	
+	@GET
+	@Path("/helloworld-austin")
+	@Produces("text/html")
+	public String helloAustin() {
+		System.out.println("Inside helloAustin");
+		return "Hello Austin ";
+	}
+
 }
