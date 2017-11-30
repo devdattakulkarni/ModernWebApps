@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax Example 2</title>
+<script>
+function doAjaxCall(url, callbackfunc)
+{
+	  var xhttp;
+	  xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	callbackfunc(this);
+	    }
+	  };
+	  xhttp.open("GET", url, true);
+	  xhttp.send();
+}
+
+function myFunction(url)
+{
+  if ( url == "/js-example/app/path/helloworld-resource/" ) {
+	  doAjaxCall(url, myfunction1)	  
+  }
+  if ( url == "/js-example/app/path/helloworld-austin/" ) {
+	  doAjaxCall(url, myfunction2)	  
+  }
+}
+
+function myfunction1(xmlhttp)
+{
+   document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+}
+
+function myfunction2(xmlhttp)
+{
+    document.getElementById("myDiv1").innerHTML=xmlhttp.responseText;
+}
+</script>
+
+
+</head>
+<body>
+
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="myFunction('/js-example/app/path/helloworld-resource/')">Change Content</button>
+
+<br>
+<br>
+
+<div id="myDiv1"><h2>Let AJAX change this text too</h2></div>
+<button type="button" onclick="myFunction('/js-example/app/path/helloworld-austin/')">Change Content</button>
+
+
+</body>
+</html>
