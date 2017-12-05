@@ -2,6 +2,25 @@ import org.junit.Test;
 
 import java.util.logging.*;
 
+/*
+ * The logging messages are controlled by configuration file:
+ *
+ * Ubuntu:
+ * /usr/lib/jvm/java-8-oracle/jre/lib/logging.properties
+ *
+ * MacOS:
+ * /Library/Java/JavaVirtualMachines/<JDK Home>/Contents/Home/jre/lib/logging.properties
+ *
+ * This file defines default levels for all loggers and ConsoleHandler. This level is INFO
+ *
+ * In order to exercise some of the methods you will need to modify this level.
+ *
+ * You can also specify custom file by setting -D java.util.logging.config.file property in
+ * program arguments in run configurations. E.g.:
+   -D java.util.logging.config.file=/Users/devdatta.kulkarni/Documents/UT/ModernWebApps/logging-example/logging.properties
+ *
+ */
+
 public class TestLogger {
 
 	@Test
@@ -57,13 +76,13 @@ public class TestLogger {
 	@Test
 	public void testPrintFineMessage() {
 		Logger testLogger = Logger.getLogger("TestLogger");		
-		testLogger.fine("This is a finest level message");
+		testLogger.fine("This is a fine level message");
 	}
 	
 	@Test
 	public void testPrintFinerMessage() {
 		Logger testLogger = Logger.getLogger("TestLogger");		
-		testLogger.finer("This is a finest level message");
+		testLogger.finer("This is a finer level message");
 	}
 
 	@Test
