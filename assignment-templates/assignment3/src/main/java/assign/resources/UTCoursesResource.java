@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.StreamingOutput;
@@ -26,9 +27,16 @@ public class UTCoursesResource {
 	EavesdropService eavesdropService;
 	
 	public UTCoursesResource() {
+		// Dependency Inject not used.
 		this.eavesdropService = new EavesdropService();
 	}
 	
+	@GET
+	@Produces("text/html")
+	public String welcome() {
+		return "Welcome message.";		
+	}
+
 	@GET
 	@Path("/helloworld")
 	@Produces("text/html")
@@ -69,6 +77,19 @@ public class UTCoursesResource {
 	}
 	
 	@GET
+	@Path("/courses/{course_id}")
+	@Produces("application/xml")
+	public Course getCourse(@PathParam("course_id") String course_id) {
+		// This method uses resteasy's JAXB provider for marshalling the response
+		System.out.println("Inside courses course_id:" + course_id);
+		Course modernWebApps = new Course();
+		modernWebApps.setDepartment("CS");
+		modernWebApps.setName("Modern Web Applications");
+		return modernWebApps;
+	}
+
+
+	@GET
 	@Path("/projects")
 	@Produces("application/xml")
 	public StreamingOutput getAllProjects() throws Exception {
@@ -82,15 +103,16 @@ public class UTCoursesResource {
 			    
 	    return new StreamingOutput() {
 	         public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-	            outputCourses(outputStream, projects);
+	            outputProjects(outputStream, projects);
 	         }
 	      };	    
 	}	
 	
 	@GET
-	@Path("/project")
+	@Path("/projects/{project_id}")
 	@Produces("application/xml")
-	public StreamingOutput getProject() throws Exception {
+	public StreamingOutput getProject(@PathParam("project_id") String project_id) throws Exception {
+		System.out.println("Inside projects project_id:" + project_id);
 		final Project heat = new Project();
 		heat.setName("%23heat");
 		heat.setLink(new ArrayList<String>());
@@ -99,7 +121,7 @@ public class UTCoursesResource {
 			    
 	    return new StreamingOutput() {
 	         public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-	            outputCourses(outputStream, heat);
+	            outputProject(outputStream, heat);
 	         }
 	      };	    
 	}		
@@ -117,7 +139,7 @@ public class UTCoursesResource {
 		}
 	}
 	
-	protected void outputCourses(OutputStream os, Projects projects) throws IOException {
+	protected void outputProjects(OutputStream os, Projects projects) throws IOException {
 		try { 
 			JAXBContext jaxbContext = JAXBContext.newInstance(Projects.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -130,7 +152,7 @@ public class UTCoursesResource {
 		}
 	}	
 	
-	protected void outputCourses(OutputStream os, Project project) throws IOException {
+	protected void outputProject(OutputStream os, Project project) throws IOException {
 		try { 
 			JAXBContext jaxbContext = JAXBContext.newInstance(Project.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
