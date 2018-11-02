@@ -10,18 +10,23 @@
       </context-param>
       
        <context-param>
-      	     <param-name>DBURL</param-name>
-      	     <param-value>testurl</param-value>
+      	     <param-name>DBHOST</param-name>
+      	     <param-value>localhost</param-value>
+      </context-param>
+      
+       <context-param>
+      	     <param-name>DBNAME</param-name>
+      	     <param-value>student_courses</param-value>
       </context-param>
 
        <context-param>
       	     <param-name>DBUSERNAME</param-name>
-      	     <param-value>testuser</param-value>
+      	     <param-value>devdatta</param-value>
       </context-param>
 
        <context-param>
       	     <param-name>DBPASSWORD</param-name>
-      	     <param-value>testpass</param-value>
+      	     <param-value></param-value>
       </context-param>
       
       <servlet>
