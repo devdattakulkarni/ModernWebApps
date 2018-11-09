@@ -68,7 +68,14 @@ public class CourseStudentServiceImpl implements CourseStudentService {
 		return c;
 	}
 
-	public NewCourse getCourse(int courseId) throws Exception {
+	public NewCourse getCourse(String courseId) throws Exception {
+		// courseId=1
+		// select * from courses where course_id=1; OK --> good query
+		
+		// courseId=1; drop table students;
+		// select * from courses where course_id=1; drop table students;
+		
+		
 		String query = "select * from courses where course_id=" + courseId;
 		Connection conn = ds.getConnection();
 		PreparedStatement s = conn.prepareStatement(query);
@@ -86,10 +93,17 @@ public class CourseStudentServiceImpl implements CourseStudentService {
 	}
 
     public NewCourse getCourse_correct(int courseId) throws Exception {
-	String query = "select * from courses where course_id=?";
+	String query = "select * from courses where course_id=?"; // 1
+	
+	// courseId=1; drop table students;
+	
 	Connection conn = ds.getConnection();
 	PreparedStatement s = conn.prepareStatement(query);
+	// MySQL will lock down the executable part to select *;
+	
 	s.setString(1, String.valueOf(courseId));
+	// MySQL will use '1; drop table students;' as data to search in the courses table;
+	
 
 	ResultSet r = s.executeQuery();
 	
