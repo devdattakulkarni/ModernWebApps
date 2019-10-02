@@ -83,6 +83,7 @@ public class UTCoursesResource {
 		List<Course> courseList = new ArrayList<Course>();
 		courseList.add(modernWebApps);
 		courseList.add(operatingSystems);
+
 		courses.setCourseList(courseList);
 
 		return courses;

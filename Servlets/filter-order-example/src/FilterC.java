@@ -13,7 +13,7 @@ public class FilterC implements Filter
                          FilterChain chain) throws IOException, ServletException
     {
         System.out.println("Entering FilterC.doFilter().");
-        chain.doFilter(request, response);
+        //chain.doFilter(request, response);
         System.out.println("Leaving FilterC.doFilter().");
     }
 

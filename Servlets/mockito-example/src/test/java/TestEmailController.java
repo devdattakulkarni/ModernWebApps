@@ -42,6 +42,29 @@ public class TestEmailController {
 	}
 	
 	@Test
+	public void testGetGreeting1WithNullForEnglishEditor() {
+		when(mockEditor.getName()).thenReturn(null);
+		when(mockEditor.composeEmail()).thenReturn("test email");
+		
+		String reply = emailController.getGreeting1("compose");
+		
+		assertEquals("test email", reply);
+		verify(mockEditor).thisIsVoidFunction();
+	}
+	
+	@Test
+	public void testGetGreeting1CorrectActionCompose() {
+		when(mockEditor.getName()).thenReturn("EnglishEditor");
+		when(mockEditor.composeEmail()).thenReturn("test email");
+		
+		String reply = emailController.getGreeting1("compose");
+		
+		assertEquals("test email", reply);
+		verify(mockEditor).thisIsVoidFunction();
+	}
+
+	
+	@Test
 	public void testGetGreetingCorrectActionCreate() {
 		when(mockEditor.composeEmail()).thenReturn("test email");
 		String reply = emailController.getGreeting("create");

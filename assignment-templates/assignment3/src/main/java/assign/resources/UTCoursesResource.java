@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,11 +25,17 @@ import assign.services.EavesdropService;
 @Path("/listing")
 public class UTCoursesResource {
 	
-	EavesdropService eavesdropService;
+	@Inject
+	private EavesdropService eavesdropService;
 	
 	public UTCoursesResource() {
 		// Dependency Inject not used.
-		this.eavesdropService = new EavesdropService();
+		//this.eavesdropService = new EavesdropService();
+		//this.eavesdropService = eavesdropService;
+	}
+	
+	public void setEavesdropService(EavesdropService eavesdropService) {
+		this.eavesdropService = eavesdropService;
 	}
 	
 	@GET
@@ -77,14 +84,20 @@ public class UTCoursesResource {
 	}
 	
 	@GET
-	@Path("/courses/{course_id}")
+	@Path("/courses/{course_id}/")
 	@Produces("application/xml")
 	public Course getCourse(@PathParam("course_id") String course_id) {
 		// This method uses resteasy's JAXB provider for marshalling the response
 		System.out.println("Inside courses course_id:" + course_id);
 		Course modernWebApps = new Course();
 		modernWebApps.setDepartment("CS");
-		modernWebApps.setName("Modern Web Applications");
+		if (course_id.equals("1")) {
+			String data = this.eavesdropService.getData();
+			modernWebApps.setName(data);
+		} else {
+			modernWebApps.setName("Modern Web Applications");			
+		}
+
 		return modernWebApps;
 	}
 
