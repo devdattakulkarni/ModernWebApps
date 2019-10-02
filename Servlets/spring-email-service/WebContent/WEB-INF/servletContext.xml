@@ -9,7 +9,7 @@
 
     <mvc:annotation-driven />
 
-    <bean name="emailController" class="EmailController">
+    <bean name="emailController" class="EmailController"> <!-- packageName.className -->
         <property name="spanishEditorService" ref="spanishEditorServiceImpl" />
         <constructor-arg ref="englishEditorServiceImpl"></constructor-arg>
     </bean>

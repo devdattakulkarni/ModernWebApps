@@ -13,7 +13,7 @@ public class EmailController {
     @RequestMapping(value = "/")
     public String helloWorld()
     {
-        return "Hello world!";
+        return "Hello world 123!";
     }
 	
 	@ResponseBody
@@ -27,13 +27,37 @@ public class EmailController {
     public String getGreeting(@RequestParam("action") String action)
     {
 		String ret = "";
-		if (action != null && action.equalsIgnoreCase("compose") ||
-				action.equalsIgnoreCase("create")) {
+		if (action != null && (action.equalsIgnoreCase("compose") ||
+				action.equalsIgnoreCase("create"))) {
+			
+			//
+			//
+			///
 			ret = editorService.composeEmail();
 			editorService.thisIsVoidFunction();
 		}
 		return ret;
     }
+	
+	@ResponseBody
+    @RequestMapping(value = "/", params = {"action"}, method=RequestMethod.GET)
+    public String getGreeting1(@RequestParam("action") String action)
+    {
+		String ret = "";
+		if (action.equalsIgnoreCase("compose") ||
+				action.equalsIgnoreCase("create") &&
+				editorService.getName().equals("EnglishEditor")) {
+			
+			//
+			//
+			//
+			
+			ret = editorService.composeEmail();
+			editorService.thisIsVoidFunction();
+		}
+		return ret;
+    }
+
 	
 	public String getWithGhostEditor() {
 		editorService = new EnglishEditorServiceImpl();

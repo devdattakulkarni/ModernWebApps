@@ -1,3 +1,6 @@
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -48,6 +51,13 @@ public class EmailController {
 			return spanishEditorService.getName() + " " + spanishEditorService.composeEmail();
 		}
 		else {
+			String encodedLanguage = null;
+			try {
+				encodedLanguage = URLEncoder.encode(language, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return "Language " + language + " not supported.";
 		}
 	}

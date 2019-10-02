@@ -50,8 +50,7 @@ public class TestQueryParameters extends HttpServlet {
             response.getWriter().println("Query String:" + request.getQueryString());
             
             // How to decode the URL encoded value?
-            String queryString = URLDecoder.decode(request.getQueryString(), "UTF-8");
-            
+            String queryString = URLDecoder.decode(request.getQueryString(), "UTF-8");            
             response.getWriter().println("Decoded Query String:" + queryString);
             
                 

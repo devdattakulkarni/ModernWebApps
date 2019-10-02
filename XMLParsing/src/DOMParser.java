@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -43,17 +45,43 @@ public class DOMParser {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-		
+
+		List<Data> dataList = new ArrayList<Data>();
+		int[] counts = new int[12];
+		for (int i=0; i<12; i++) {
+		    counts[i] = 0;
+		}
+
 		Element rootElement = document.getDocumentElement();
 		Queue<Element> q = new LinkedList<Element>();
 		q.add(rootElement);
-		
+
+		    String cameraStatus = "";
+		    String ipCommStatus = "";
+
 		while(!q.isEmpty()) {
-			Element e = (Element) q.remove();			
-			if (e.getNodeName().equals("assignment")) {
+
+		    Element e = (Element) q.remove();
+
+			if (e.getNodeName().equals("camera_status")) {
 		    	String nodeValue = e.getTextContent();
-		    	System.out.println("Node value:" + nodeValue);
-		    }
+		    	//System.out.println("Node value:" + nodeValue);
+			cameraStatus = nodeValue;
+		        }
+
+			if (e.getNodeName().equals("ip_comm_status")) {
+		    	String nodeValue = e.getTextContent();
+		    	//System.out.println("Node value:" + nodeValue);
+			ipCommStatus = nodeValue;
+		        }
+
+			if (cameraStatus != "" && ipCommStatus != "") {
+			    Data d = new Data(cameraStatus, ipCommStatus);
+			    dataList.add(d);
+			    cameraStatus = "";
+			    ipCommStatus = "";
+			}
+
 			NodeList nodes = e.getChildNodes();
 			for(int i=0; i<nodes.getLength(); i++) {
 				  Node node = nodes.item(i);
@@ -62,5 +90,23 @@ public class DOMParser {
 				    }
 				  }
 			}
+		System.out.println("DataList Size:" + dataList.size());
+		for (int i=0; i<dataList.size(); i++) {
+	Data d = dataList.get(i);
+	System.out.print(i + " Camera Status:" + d.cameraStatus + " ");
+	System.out.println(" IP Comm Status:" + d.ipCommStatus);
+	if (d.cameraStatus.equalsIgnoreCase("desired") && d.ipCommStatus.equalsIgnoreCase("online")) {
+	    counts[0]++;
+	}
+	if (d.cameraStatus.equalsIgnoreCase("desired") && d.ipCommStatus.equalsIgnoreCase("offline")) {
+	    counts[1]++;
+	}
+	if (d.cameraStatus.equalsIgnoreCase("desired") && d.ipCommStatus.equalsIgnoreCase("no communication")) {
+	    counts[2]++;
+	}
+    }
+		for (int i=0; i<12; i++) {
+		    System.out.println(counts[i]);
+		}
 	}
 }
