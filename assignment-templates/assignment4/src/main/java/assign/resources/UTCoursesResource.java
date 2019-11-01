@@ -45,7 +45,7 @@ public class UTCoursesResource {
 		username = servletContext.getInitParameter("DBUSERNAME");
 		password = servletContext.getInitParameter("DBPASSWORD");
 		//jdbc:mysql://localhost:3306/student_courses
-		dburl = "jdbc:mysql://" + host + ":3306/" + dbname;
+        dburl = "jdbc:mysql://" + host + ":3306/" + dbname + "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		this.courseStudentService = new CourseStudentServiceImpl(dburl, username, password);		
 	}
 
