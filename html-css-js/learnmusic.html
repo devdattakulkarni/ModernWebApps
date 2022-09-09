@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Learn Music - Modern Web Apps, UT Austin, Fall 2022</title>
+    <style>
+    .button {
+      background-color:#fcba03;
+      width: 75%;
+      height: 45px;
+      padding: 10px;
+      margin: 12px;
+      font-family: Arial;
+    }
+    .label {
+      margin: 15px;
+      float:left;
+      font-size: 16pt;
+    }
+    .input {
+      margin: 15px;
+      width: 200px;
+      height: 20px;
+    }
+    .select {
+      margin: 15px;
+      width: 200px;
+      height: 20px;
+    }
+    </style>
+    <script>
+      // Lesson store
+      var lessons = {};
+
+      function show_lesson(lesson_name) {
+        alert("lesson details - " + lesson_name + " TODO: Add remaining fields");
+      }
+
+
+      function store_lesson() {
+        lesson_name = document.getElementById("lesson-name-input").value;
+        if (lesson_name == "") {
+          alert("Lesson Name cannot be empty.");
+          return;
+        }
+        lesson = document.createElement("li");
+        lesson.setAttribute("id", lesson_name + "-li");
+
+        //Assignment1 TODO: Add check on demo_url. Should not be empty; should start with http or https
+        demo_url = document.getElementById("demo-url").value;
+
+        //Assignment1 TODO: Add check on radio button - One should be selected
+        timings = document.querySelector('input[name="timings-radio"]:checked').value;
+
+        //Assignment1 TODO: Complete the list of days of the week
+        days_of_week = get_days_of_week();
+
+        lesson_details = {};
+        lesson_details['demo_url'] = demo_url;
+        lesson_details['days'] = days_of_week;
+        lesson_details['timings'] = timings;
+        lesson_details['instrument'] = lesson_name;
+        lessons[lesson_name] = lesson_details;
+
+        //Assignment1 TODO: Add an anchor element instead of label element lesson_name
+        // Clicking the anchor element should show an alert with the lesson details
+        lesson = document.createElement("li");
+        lesson.setAttribute("id", lesson_name + "-li");
+        lesson_label = document.createElement("label");
+        lesson_label.setAttribute("onclick","show_lesson('" + lesson_name + "')");
+        lesson_label.innerHTML = lesson_name;
+        lesson.appendChild(lesson_label);
+        document.getElementById("lesson_list").appendChild(lesson);
+
+      }
+
+      function get_days_of_week() {
+        days_of_week = [];
+
+        if (document.querySelector('input[name="monday"]:checked')) {
+          days_of_week.push(document.getElementById("monday").value);
+        }
+
+        if (document.querySelector('input[name="tuesday"]:checked')) {
+          days_of_week.push(document.getElementById("tuesday").value);
+        }
+
+        return days_of_week;
+      }
+
+      function take_input() {
+        document.getElementById("welcome").setAttribute("style","display:none");
+        document.getElementById("take-input").setAttribute("style","display:block");
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <div style="height:10vh; width:100%; background-color: gray;margin-top:-5vh; margin-left:0px; margin-right:10px" >
+          <h1 style="color:white;text-align: center; padding:3vh">Teach Music/Learn Music</h1>
+      </div>
+      <div>
+        <div style="width:15%;height:90vh;flex-direction: vertical; background-color: lightblue;float:left;" id="indexcol">
+          <button class="button" id="offerings-button" onclick="take_input()">Offer Lessons</button>
+          <br></br>
+          <!--Assignment1 TODO: Add "Search" button. Add onclick handler to show alert with message: "TODO: Learn Music search coming soon" -->
+        </div>
+      </div>
+      <div style="width:70%;height:90vh;flex-direction: vertical; background-color: white;float:left;" id="contentcol">
+        <div id="welcome" style="display:block">
+          <h2 style="padding-left:40px">Welcome to Music Marketplace. Offer your music lessons Or learn music.</h2>
+        </div>
+        <div id="take-input" style="display:none;">
+          <table style="padding-top: 20px; padding-left: 20%; padding-right:20%">
+            <tr>
+              <td><label class="label">Lesson Name</label></td>
+              <td><input class="input" type="text" id="lesson-name-input"></input></td>
+            </tr>
+            <tr>
+              <td><label class="label">Instrument</label></td>
+              <td>
+                <!-- Assignment1 TODO: Complete the list of instruments -->
+                <select id="instrument-list-select" class="input">
+                  <option value="guitar">Guitar</option>
+                  <option value="piano">Piano</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="label">Timings</label></td>
+              <td>
+                <input type="radio" name="timings-radio" value="30" style="float:left" >30 mins</input>
+                <input type="radio" name="timings-radio" value="45" >45 mins</input>
+                <input type="radio" name="timings-radio" value="60" >60 mins</input>
+              </td>
+              <tr>
+                <td><label class="label">Days of the Week</label></td>
+                <td>
+                  <br></br>
+                  <!-- Assignment1 TODO: Complete the list of days -->
+                  <input type="checkbox" name="monday" id="monday" value="Monday">Monday</input><br></br>
+                  <input type="checkbox" name="tuesday" id="tuesday" value="Tuesday">Tuesday</input>
+                </td>
+              </tr>
+              <tr>
+                <td><label class="label">Demo URL</label></td>
+                <td><input class="input" type="text" id="demo-url"></input></td>
+              </tr>
+          </table>
+          <br></br>
+          <div style="text-align: center;">
+            <button class="button" style="width:25%" onclick="store_lesson()">Register</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="height:90vh; width:15%; background-color:lightblue;float:left;" id="mylessonscol">
+          <!-- Assignment1 TODO: Change the button to a label. See assignment details for specs -->
+          <button class="button" id="my-lessons-button">My Lessons</button>
+          <div>
+            <ul id="lesson_list">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
