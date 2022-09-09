@@ -1,0 +1,245 @@
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+127.0.0.1 - - [09/Sep/2022 13:26:19] "[35m[1mGET / HTTP/1.1[0m" 500 -
+127.0.0.1 - - [09/Sep/2022 13:26:19] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:26:19] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:26:19] "GET /?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:26:19] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:26:20] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+127.0.0.1 - - [09/Sep/2022 13:27:58] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:27:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [09/Sep/2022 13:28:08] "[31m[1mPOST /login HTTP/1.1[0m" 405 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+127.0.0.1 - - [09/Sep/2022 13:53:11] "[31m[1mGET /login HTTP/1.1[0m" 405 -
+Inside index
+127.0.0.1 - - [09/Sep/2022 13:53:15] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:53:20] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 13:53:35] "[31m[1mGET /login HTTP/1.1[0m" 405 -
+Inside index
+Inside index
+Inside index
+Inside index
+Exception on /login [POST]
+Traceback (most recent call last):
+  File "/Users/devdatta/ModernWebApps/flask/myapp/lib/python3.8/site-packages/flask/app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/devdatta/ModernWebApps/flask/myapp/lib/python3.8/site-packages/flask/app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/devdatta/ModernWebApps/flask/myapp/lib/python3.8/site-packages/flask/app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/devdatta/ModernWebApps/flask/myapp/lib/python3.8/site-packages/flask/app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/devdatta/ModernWebApps/flask/application.py", line 51, in login
+    return render_template('musicmarketplace.html', lessons)
+TypeError: render_template() takes 1 positional argument but 2 were given
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 14:57:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 14:57:48] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+127.0.0.1 - - [09/Sep/2022 14:57:48] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 14:57:48] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 14:57:48] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 14:57:49] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 14:57:49] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:01:34] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:01:40] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+127.0.0.1 - - [09/Sep/2022 15:01:40] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:01:40] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:01:40] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:01:40] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:02:28] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:02:32] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+127.0.0.1 - - [09/Sep/2022 15:02:33] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:02:33] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:02:33] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:02:33] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:03:19] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:03:24] "POST /login HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:04:34] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:04:38] "POST /login HTTP/1.1" 200 -
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:25:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:25:30] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:25:30] "GET /static/scripts/musicmarketplace.js HTTP/1.1" 200 -
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+ * Detected change in '/Users/devdatta/ModernWebApps/flask/application.py', reloading
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:43:55] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:44:00] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:44:00] "GET /static/scripts/musicmarketplace.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:44:33] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:44:33] "GET /static/scripts/musicmarketplace.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:44:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:46:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:46:31] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:46:31] "GET /static/scripts/musicmarketplace.js HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:49:10] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:49:16] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:49:16] "[36mGET /static/scripts/musicmarketplace.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [09/Sep/2022 15:49:31] "GET /lessons?instrument=guitar HTTP/1.1" 200 -
+Portal started...
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.0.14:5003/ (Press CTRL+C to quit)
+ * Restarting with stat
+Portal started...
+ * Debugger is active!
+ * Debugger PIN: 391-515-773
+Inside index
+127.0.0.1 - - [09/Sep/2022 15:50:23] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:50:28] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:50:28] "GET /static/scripts/musicmarketplace.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Sep/2022 15:50:51] "GET /lessons?instrument=guitar HTTP/1.1" 200 -
