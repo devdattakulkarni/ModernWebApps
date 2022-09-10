@@ -5,6 +5,7 @@ import requests
 
 import os
 import time
+import random
 
 from jinja2 import Template
 
@@ -36,6 +37,7 @@ dictConfig({
 
 app = Flask(__name__)
 
+# Globals
 lessons = []
 lesson1 = {}
 lesson1['name'] = "Guitar1"
@@ -62,9 +64,27 @@ lessons.append(lesson1)
 lessons.append(lesson2)
 lessons.append(lesson3)
 
+signed_up_students = []
+
+
+@app.route("/signups")
+def get_signups():
+    app.logger.info("Inside get_signups")
+
+    names = ['alpha', 'beta', 'gamma', 'zeta', 'calisto', 'io', 'europa', 'ganymede']
+    name = names[random.choice([1,2,3,4,5,6,7,8])]
+    student = {}
+    student['name'] = name
+    signed_up_students.append(student)
+
+    ret_obj = {}
+    ret_obj['signups'] = signed_up_students
+    return ret_obj
+
 
 @app.route("/lessons")
 def get_lesson():
+    app.logger.info("Inside get_lesson")
     time.sleep(10)
     instrument = request.args.get('instrument').strip().lower()
     lessons_to_ret = []
@@ -78,6 +98,7 @@ def get_lesson():
 
 @app.route("/login", methods=['POST'])
 def login():
+    app.logger.info("Inside login")
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     template_path = os.path.join(BASE_DIR, "templates/musicmarketplace.html")
 
@@ -87,10 +108,12 @@ def login():
 
     return t.render(lessons=lessons)
 
+
 @app.route("/")
 def index():
     app.logger.info("Inside index")
     return render_template('index.html')
+
 
 if __name__ == "__main__":
 

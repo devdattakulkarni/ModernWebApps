@@ -1,5 +1,40 @@
       var lessons = {};
 
+(function get_signups() {
+   setTimeout(() => {
+
+        url = "/signups";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true); // async=true -> asynchronous
+
+        xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            fieldData = JSON.parse(this.responseText);
+            console.log(fieldData);
+            console.log("-------");
+            students = fieldData['signups'];
+
+            signupsDiv = document.getElementById("signups");
+
+            for(i=0;i<students.length; i++) {
+              student = students[i];
+              name = student['name'];
+              if (document.getElementById("student-" + name) == null) {
+                studentItem = document.createElement("li");
+                studentItem.setAttribute("id","student-" + name);
+                signupsDiv.appendChild(studentItem);
+                studentItem.innerHTML = name;
+              }
+          }
+        }
+      }
+
+        xhr.send();
+      get_signups();
+  }, 5000); // 5 seconds
+})();
+
       function show_lesson(lesson_name) {
         lesson_details = lessons[lesson_name];
         demo_url = lesson_details['demo_url'];
@@ -62,7 +97,7 @@
         url = "/lessons?instrument=guitar";
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
+        xhr.open('GET', url, true); // async=true -> asynchronous
 
         xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
