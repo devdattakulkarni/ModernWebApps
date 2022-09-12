@@ -9,7 +9,13 @@ pip3 install -r requirements.txt
 
 ./start-app.sh
 
-curl localhost:5003
+curl http://localhost:5003
+
+--or--
+
+Open http://localhost:5003 in browser
+
+Enter any username/password and hit submit button (the web app does not support login functionality yet).
 
 more myapp.log
 
