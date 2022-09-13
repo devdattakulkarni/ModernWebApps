@@ -72,7 +72,7 @@ def get_signups():
     app.logger.info("Inside get_signups")
 
     names = ['alpha', 'beta', 'gamma', 'zeta', 'calisto', 'io', 'europa', 'ganymede']
-    name = names[random.choice([1,2,3,4,5,6,7,8])]
+    name = names[random.choice([1,2,3,4,5,6,7,8])-1]
     student = {}
     student['name'] = name
     signed_up_students.append(student)
@@ -97,7 +97,7 @@ def get_lesson():
 
 
 @app.route("/login", methods=['POST'])
-def login():
+def login123():
     app.logger.info("Inside login")
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     template_path = os.path.join(BASE_DIR, "templates/musicmarketplace.html")

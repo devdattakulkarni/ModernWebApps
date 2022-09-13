@@ -1,15 +1,26 @@
 Steps
 ------
 
-python3 -m venv venv 
+1. Create Virtual Environment
+```python3 -m venv venv``` 
 
-source venv/bin/activate
+2. Activate Virtual Environment
+```source venv/bin/activate```
 
-pip3 install -r requirements.txt
+3. Install dependencies
+```pip3 install -r requirements.txt```
 
-./start-app.sh
+4. Run web app
 
-curl http://localhost:5003
+   - When developing (Use Flask's built-in web server):
+     ```python3 application.py```
+
+   - In production (Use Gunicorn):
+     ```./start-app.sh```
+
+5. Access web app
+
+```curl http://localhost:5003```
 
 --or--
 
@@ -17,8 +28,21 @@ Open http://localhost:5003 in browser
 
 Enter any username/password and hit submit button (the web app does not support login functionality yet).
 
-more myapp.log
 
-./stop-app.sh
+6. Debug web app
+
+   - Put breakpoint in code:
+     ```import pdb; pdb.set_trace()```
+
+   - Check logs:
+     ```more myapp.log```
+
+7. Stop web app
+ 
+   - If running directly using python interpreter
+     ```Hit Cntrl+C```
+
+   - If running using Gunicorn
+      ```./stop-app.sh```
 
 
