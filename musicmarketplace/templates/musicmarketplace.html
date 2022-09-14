@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Learn Music</title>
+    <link rel="stylesheet" href="../static/styles/musicmarketplace.css">
+    <script src="../static/scripts/musicmarketplace.js">
+    </script>
+  </head>
+  <body onload="check_and_refresh()">
+    <div>
+      <div style="height:10vh; width:100%; background-color: gray;margin-top:-5vh; margin-left:0px; margin-right:10px" >
+          <h1 style="color:white;text-align: center; padding:3vh">{{persona_specific_banner}}</h1>
+      </div>
+      <div>
+        <div style="width:15%;height:90vh;background-color: lightblue;float:left;" id="indexcol">
+          <button class="button" id="offerings-button" onclick="{{ offer_lesson_or_search_handler }}">{{ offer_lesson_or_search }}</button>
+        </div>
+      </div>
+      <div style="width:70%;height:90vh;background-color: white;float:left;" id="contentcol">
+        <div id="welcome" style="display:block">
+          <h2 style="padding-left:40px; text-align: center;">{{persona_specific_message}}</h2>
+        </div>
+
+        <div id="take-input" style="display:none;">
+          <!-- TODO: Hookup the form with register_lesson with method post -->
+          <form>
+          <table style="padding-top: 20px; padding-left: 200px">
+            <!-- TODO: Add Instructor Name label and a text box to input instructor name --> 
+            <tr>
+              <td><label class="label">Lesson Name</label></td>
+              <td><input class="input" type="text" name="lesson-name-input" id="lesson-name-input"></input></td>
+            </tr>
+            <tr>
+              <td><label class="label">Instrument</label></td>
+              <td>
+                <select id="instrument-list-select" name="instrument-list-select" class="input">
+                  <option value="guitar">Guitar</option>
+                  <option value="piano">Piano</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="label">Timings</label></td>
+              <td>
+                <input type="radio" name="timings-radio" value="30" style="float:left" >30 mins</input>
+                <input type="radio" name="timings-radio" value="45" >45 mins</input>
+                <input type="radio" name="timings-radio" value="60" >60 mins</input>
+              </td>
+             </tr>
+              <tr>
+                <td><label class="label">Days of the Week</label></td>
+                <td>
+                  <br></br>
+                  <input type="checkbox" name="day_of_the_week" id="monday" value="Monday">Monday</input><br></br>
+                  <input type="checkbox" name="day_of_the_week" id="tuesday" value="Tuesday">Tuesday</input>
+                </td>
+              </tr>
+              <tr>
+                <td><label class="label">Demo URL</label></td>
+                <td><input class="input" type="text" name="demo-url" id="demo-url"></input></td>
+              </tr>
+          </table>
+          <br></br>
+          <div style="text-align: center;">
+            <button type="submit" class="button">Register</button>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div>
+        <div style="height:90vh; width:15%; background-color:lightblue;float:left;" id="mylessonscol">
+
+          <div>
+
+            <label class="label" id="my-lessons-button" style="background-color: lightgreen; padding:20px;margin-left:22px">{{ my_lessons }}</label>
+            <div>
+              <ul id="lesson_list">
+                {% for name_lesson in name_lesson_list %}
+                  <li>{{ name_lesson.entity }}</li>
+                {% endfor %}
+              </ul>
+              <hr></hr>
+              <div id="signups-div" style="{{signups_style}}"">
+                <h3>Signups:</h3>
+                <ul id="signups">
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

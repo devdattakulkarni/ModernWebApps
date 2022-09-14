@@ -1,0 +1,24 @@
+.button {
+  background-color:#fcba03;
+  width: 150px;
+  height: 45px;
+  padding: 10px;
+  margin: 12px;
+  font-size: 15pt;
+  font-family: Arial;
+}
+.label {
+  margin: 15px;
+  float:left;
+  font-size: 16pt;
+}
+.input {
+  margin: 15px;
+  width: 200px;
+  height: 20px;
+}
+.select {
+  margin: 15px;
+  width: 200px;
+  height: 20px;
+}
