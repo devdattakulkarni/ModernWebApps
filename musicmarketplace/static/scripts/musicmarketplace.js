@@ -53,8 +53,6 @@ function search_music() {
 
 function learn_music() {
 
-    // TODO: Ensure that below section is added only if it is not present
-
     document.getElementById("contentcol").innerHTML = "";
 
     searchLabel = document.createElement("label");
