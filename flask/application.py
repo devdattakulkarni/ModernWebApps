@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, abort, jsonify
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 import requests
@@ -67,6 +67,11 @@ lessons.append(lesson3)
 signed_up_students = []
 
 
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+
 @app.route("/signups")
 def get_signups():
     app.logger.info("Inside get_signups")
@@ -83,17 +88,36 @@ def get_signups():
 
 
 @app.route("/lessons")
-def get_lesson():
-    app.logger.info("Inside get_lesson")
+def get_lessons():
+    app.logger.info("Inside get_lessons")
     time.sleep(10)
-    instrument = request.args.get('instrument').strip().lower()
-    lessons_to_ret = []
-    for lesson in lessons:
-        if instrument in lesson['instrument'].lower():
-            lessons_to_ret.append(lesson)
     ret_obj = {}
+    if 'instrument' in request.args:
+        instrument = request.args.get('instrument').strip().lower()
+        lessons_to_ret = []
+        for lesson in lessons:
+            if instrument in lesson['instrument'].lower():
+                lessons_to_ret.append(lesson)
+    else:
+        lessons_to_ret = lessons
     ret_obj['lessons'] = lessons_to_ret
     return ret_obj
+
+
+@app.route("/lessons/<lesson_name>")
+def get_lesson(lesson_name):
+    app.logger.info("Inside get_lesson %s", lesson_name)
+    lesson_to_ret = ""
+    for lesson in lessons:
+        if lesson['name'] == lesson_name:
+            lesson_to_ret = lesson
+            break
+
+    if lesson_to_ret == "":
+        abort(404)
+        #abort(404, description=lesson_name + " not found")
+
+    return lesson_to_ret
 
 
 @app.route("/login", methods=['POST'])
