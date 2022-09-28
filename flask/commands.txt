@@ -1,0 +1,65 @@
+Commands to try:
+-----------------
+
+Try these after running the application (python3 application.py)
+
+
+curl -v -X POST "http://localhost:5003/lessons" -H "Content-type: application/json" -d @lesson.json
+-> Should get 200 OK and the inserted lesson JSON returned with an id.
+
+curl -v -X GET "http://localhost:5003/lessons"
+-> Should get 200 OK and list of lessons
+
+curl -v -X GET "http://localhost:5003/lessons/<id-from-post-response-body>"
+-> Should get 200 OK and the lesson JSON with id.
+
+curl -v -X PUT "http://localhost:5003/lessons/<id-from-post-response-body>" -H "Content-type: application/json" -d @lesson1.json
+-> Should get 200 OK with status message.
+
+curl -v -X GET "http://localhost:5003/lessons/<id-from-post-response-body>"
+-> Should get 200 OK and updated lesson JSON (with different demo_url)
+
+curl -v -X DELETE "http://localhost:5003/lessons/<id-from-post-response-body>"
+-> Should get 200 OK with status message.
+
+curl -v -X GET "http://localhost:5003/lessons/<id-from-post-response-body>"
+-> Should get 404 Not found with status message.
+
+curl -v -X PUT "http://localhost:5003/lessons/<id-from-post-response-body>" -H "Content-type: application/json" -d @lesson1.json
+-> Should get 404 Not found with status message.
+
+curl -v -X DELETE "http://localhost:5003/lessons/<id-from-post-response-body>"
+-> Should get 404 Not found with status message.
+
+
+
+SQLAlchemy commands to try
+----------------------------
+Try these from python interpreter console
+
+from sqlalchemy import create_engine
+engine = create_engine("sqlite:///foo.db", echo=True, future=True)
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker(bind=engine)
+session = Session()
+from sqlalchemy.orm import declarative_base
+Base = declarative_base()
+from sqlalchemy import Column, Integer, String
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    fullname = Column(String)
+    nickname = Column(String)
+    def __repr__(self):
+       return "<User(name='%s', fullname='%s', nickname='%s')>" % (
+                            self.name, self.fullname, self.nickname)
+session.add(ed_user)
+session.commit()
+our_user = session.query(User).filter_by(name='ed').first()
+our_user
+
+
+
+
+

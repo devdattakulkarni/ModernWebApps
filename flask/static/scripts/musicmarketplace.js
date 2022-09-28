@@ -3,7 +3,7 @@
 (function get_signups() {
    setTimeout(() => {
 
-        url = "/signups";
+        url = "/signups_in_memory";
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true); // async=true -> asynchronous
@@ -94,7 +94,7 @@
       }
 
       function learn_music() {
-        url = "/lessons?instrument=guitar";
+        url = "/lessons_with_delay?instrument=guitar";
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true); // async=true -> asynchronous

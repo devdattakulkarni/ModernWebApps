@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, abort, jsonify
 from jinja2 import Environment, PackageLoader, select_autoescape
+from flask import Response
 
 import requests
 
@@ -10,6 +11,11 @@ import random
 from jinja2 import Template
 
 from logging.config import dictConfig
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String
 
 dictConfig({
     'version': 1,
@@ -67,13 +73,60 @@ lessons.append(lesson3)
 signed_up_students = []
 
 
+# SQLite Database creation
+Base = declarative_base()
+
+# TODO: Change db name
+engine = create_engine("sqlite:///lessons.db", echo=True, future=True)
+Session = sessionmaker(bind=engine)
+
+
+class Lesson(Base):
+    __tablename__ = 'lessons'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    instrument = Column(String)
+    demo_url = Column(String)
+    days = Column(String)
+    timings = Column(String)
+    signups = relationship("Signup", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return "<Lesson(name='%s', instrument='%s', demo_url='%s', days='%s', timings='%s')>" % (
+                self.name, self.instrument, self.demo_url, self.days, self.timings)
+
+    # Ref: https://stackoverflow.com/questions/5022066/how-to-serialize-sqlalchemy-result-to-json
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+# TODO: Add Person class
+
+class Signup(Base):
+    __tablename__ = 'signup'
+    lessonId = Column(ForeignKey("lesson.id"), primary_key=True)
+    #TODO: Add personId
+
+    def __repr__(self):
+        return "<Signup(lessonId='%d')>" % (self.lessonId)
+
+    # Ref: https://stackoverflow.com/questions/5022066/how-to-serialize-sqlalchemy-result-to-json
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+
+Base.metadata.create_all(engine)
+
+
+
 @app.errorhandler(404)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
 
 
-@app.route("/signups")
-def get_signups():
+@app.route("/signups_in_memory")
+def get_signups_previous():
     app.logger.info("Inside get_signups")
 
     names = ['alpha', 'beta', 'gamma', 'zeta', 'calisto', 'io', 'europa', 'ganymede']
@@ -87,9 +140,9 @@ def get_signups():
     return ret_obj
 
 
-@app.route("/lessons")
-def get_lessons():
-    app.logger.info("Inside get_lessons")
+@app.route("/lessons_with_delay")
+def get_lessons_with_delay():
+    app.logger.info("Inside get_lessons_with_delay")
     time.sleep(10)
     ret_obj = {}
     if 'instrument' in request.args:
@@ -104,9 +157,9 @@ def get_lessons():
     return ret_obj
 
 
-@app.route("/lessons/<lesson_name>")
-def get_lesson(lesson_name):
-    app.logger.info("Inside get_lesson %s", lesson_name)
+@app.route("/lessons_by_name/<lesson_name>")
+def get_lesson_from_in_memory_dict(lesson_name):
+    app.logger.info("Inside get_lesson_from_in_memory_dict %s", lesson_name)
     lesson_to_ret = ""
     for lesson in lessons:
         if lesson['name'] == lesson_name:
@@ -118,6 +171,108 @@ def get_lesson(lesson_name):
         #abort(404, description=lesson_name + " not found")
 
     return lesson_to_ret
+
+
+#### MusicMarketPlace REST API methods below
+@app.route("/lessons", methods=['POST'])
+def register_lesson():
+    app.logger.info("Inside register_lesson")
+    data = request.json
+    app.logger.info("Received request:%s", str(data))
+
+    name = data['name']
+    instrument = data['instrument']
+    timings = data['timings']
+    demo_url = data['demo_url']
+    days = data['days']
+
+    lesson = Lesson(name=name,
+                    instrument=instrument,
+                    timings=timings,
+                    demo_url=demo_url,
+                    days=days)
+
+    session = Session()
+    session.add(lesson)
+    session.commit()
+
+    return lesson.as_dict()
+
+
+@app.route("/lessons")
+def get_lessons():
+    app.logger.info("Inside get_lessons")
+    ret_obj = {}
+
+    session = Session()
+    lessons = session.query(Lesson)
+    lesson_list = []
+    for lesson in lessons:
+        lesson_list.append(lesson.as_dict())
+
+    ret_obj['lessons'] = lesson_list
+    return ret_obj
+
+
+@app.route("/lessons/<id>")
+def get_lesson_by_id(id):
+    app.logger.info("Inside get_lesson_by_id %s\n", id)
+
+    session = Session()
+    lesson = session.query(Lesson).filter_by(id=id).first()
+
+    app.logger.info("Found lesson:%s\n", str(lesson))
+    if lesson == None:
+        status = ("Lesson with id {id} not found\n").format(id=id)
+        return Response(status, status=404)
+    else: 
+        return lesson.as_dict()
+
+
+@app.route("/lessons/<id>", methods=['PUT'])
+def update_lesson_by_id(id):
+    app.logger.info("Inside update_lesson_by_id %s\n", id)
+
+    input_lesson = request.json
+    app.logger.info("Received request:%s", str(input_lesson))
+
+    session = Session()
+    lesson = session.query(Lesson).filter_by(id=id).first()
+
+    app.logger.info("Found lesson:%s\n", str(lesson))
+    if lesson == None:
+        status = ("Lesson with id {id} not found.\n").format(id=id)
+        return Response(status, status=404)
+    else:
+        lesson.name = input_lesson['name']
+        lesson.instrument = input_lesson['instrument']
+        lesson.timings = input_lesson['timings']
+        lesson.demo_url = input_lesson['demo_url']
+        lesson.days = input_lesson['days']
+        session.commit()
+        status = ("Lesson with id {id} updated.\n").format(id=id)
+        return Response(status, status=200)
+
+
+@app.route("/lessons/<id>", methods=['DELETE'])
+def delete_lesson_by_id(id):
+    app.logger.info("Inside delete_lesson_by_id %s\n", id)
+
+    session = Session()
+    lesson = session.query(Lesson).filter_by(id=id).first()
+
+    app.logger.info("Found lesson:%s\n", str(lesson))
+    if lesson == None:
+        status = ("Lesson with id {id} not found.\n").format(id=id)
+        return Response(status, status=404)
+    else:
+        session.delete(lesson)
+        session.commit()
+        status = ("Lesson with id {id} deleted.\n").format(id=id)
+        return Response(status, status=200)
+
+## TODO: Add methods for person resource and signup resource
+
 
 
 @app.route("/login", methods=['POST'])
