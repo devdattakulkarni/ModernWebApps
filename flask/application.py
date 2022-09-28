@@ -14,8 +14,8 @@ from logging.config import dictConfig
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, ForeignKey, String
 
 dictConfig({
     'version': 1,
@@ -104,7 +104,7 @@ class Lesson(Base):
 
 class Signup(Base):
     __tablename__ = 'signup'
-    lessonId = Column(ForeignKey("lesson.id"), primary_key=True)
+    lessonId = Column(ForeignKey("lessons.id"), primary_key=True)
     #TODO: Add personId
 
     def __repr__(self):
