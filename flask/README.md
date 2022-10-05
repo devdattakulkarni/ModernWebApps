@@ -45,4 +45,6 @@ Enter any username/password and hit submit button (the web app does not support 
    - If running using Gunicorn
       ```./stop-app.sh```
 
+8. Run tests against the REST API
 
+   ```./test.sh```
