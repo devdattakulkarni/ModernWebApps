@@ -77,7 +77,9 @@ signed_up_students = []
 Base = declarative_base()
 
 # TODO: Change db name
-engine = create_engine("sqlite:///lessons.db", echo=True, future=True)
+db_name = os.getenv("MUSIC_MARKETPLACE_DB","lessons.db")
+db_url = "sqlite:///" + db_name
+engine = create_engine(db_url, echo=True, future=True)
 Session = sessionmaker(bind=engine)
 
 
@@ -214,12 +216,27 @@ def get_lessons():
     return ret_obj
 
 
+@app.route("/lessons123/<id>")
+def get_lesson_by_id123(id):
+    app.logger.info("Inside get_lesson_by_id %s\n", id)
+
+    session = Session()
+    lesson = session.query(Lesson).filter_by(id=id).first()
+
+    app.logger.info("Found lesson:%s\n", str(lesson))
+    if lesson == None:
+        status = ("Lesson with id {id} not found\n").format(id=id)
+        return Response(status, status=404)
+    else: 
+        return lesson.as_dict()
+
+
 @app.route("/lessons/<id>")
 def get_lesson_by_id(id):
     app.logger.info("Inside get_lesson_by_id %s\n", id)
 
     session = Session()
-    lesson = session.query(Lesson).filter_by(id=id).first()
+    lesson = session.get(Lesson, id)
 
     app.logger.info("Found lesson:%s\n", str(lesson))
     if lesson == None:
