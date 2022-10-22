@@ -10,14 +10,24 @@
     <script src="../static/scripts/musicmarketplace.js">
     </script>
   </head>
-  <body onload="check_and_refresh()">
+  <!-- <body onload="check_and_refresh()"> -->
+  <body>
     <div>
       <div style="height:10vh; width:100%; background-color: gray;margin-top:-5vh; margin-left:0px; margin-right:10px" >
-          <h1 style="color:white;text-align: center; padding:3vh">{{persona_specific_banner}}</h1>
+          <h1 style="color:white;text-align: center; padding:3vh;">{{persona_specific_banner}} {{user}}</h1>
       </div>
       <div>
         <div style="width:15%;height:90vh;background-color: lightblue;float:left;" id="indexcol">
           <button class="button" id="offerings-button" onclick="{{ offer_lesson_or_search_handler }}">{{ offer_lesson_or_search }}</button>
+          <br></br>
+          <br></br>
+          <form id="logout_form" action="logout" method="post">
+            <button class="button" style="height:60px">Logout  </button>
+          </form>
+
+          <br></br>
+          <br></br>
+          <button class="button" onclick="test_cors()"> Test CORS </button>
         </div>
       </div>
       <div style="width:70%;height:90vh;background-color: white;float:left;" id="contentcol">

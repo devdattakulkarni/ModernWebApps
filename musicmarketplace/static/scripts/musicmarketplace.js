@@ -6,10 +6,10 @@ function check_and_refresh() {
 
      setTimeout(() => {
 
-          url = "/signups";
+          path = "/signups"; // url ==> http://localhost:5003/signups
 
           var xhr = new XMLHttpRequest();
-          xhr.open('GET', url, true); // async=true -> asynchronous
+          xhr.open('GET', path, true); // async=true -> asynchronous
 
           xhr.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
@@ -49,6 +49,26 @@ function search_music() {
 
   // Steps: Parse the input instrument; make AJAX call; show the results; create form to signup.")
 
+}
+
+function test_cors() {
+
+          url = "http://localhost:5004/cors";
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true); // async=true -> asynchronous
+
+          xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+              respText = this.responseText;
+              console.log(respText);
+              alert("Response data:" + respText);
+
+          } else {
+            alert("Request denied.")
+          }
+        }
+        xhr.send();
 }
 
 function learn_music() {

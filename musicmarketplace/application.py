@@ -1,11 +1,15 @@
 from flask import Flask, render_template, redirect, request, url_for
 from jinja2 import Environment, PackageLoader, select_autoescape
+from flask import Response
 
 import requests
+
+from werkzeug.datastructures import Headers
 
 import os
 import time
 import random
+import string
 
 from jinja2 import Template
 
@@ -46,7 +50,11 @@ lessons = []
 signed_up_students = []
 
 
-def render_main_page(persona, specific_message=''):
+# Logged in sessions
+sessions = {}
+
+
+def render_main_page(persona, specific_message='', user=''):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     template_path = os.path.join(BASE_DIR, "templates/musicmarketplace.html")
 
@@ -72,6 +80,8 @@ def render_main_page(persona, specific_message=''):
         offer_lesson_or_search = "Offer Lesson";
         offer_lesson_or_search_handler = "take_input()";
         persona_specific_message = specific_message
+    if persona == "unknown":
+        return t.render(user=user)
 
     return t.render(name_lesson_list=persona_specific_entities,
                     my_lessons=persona_specific_my_lessons,
@@ -80,7 +90,8 @@ def render_main_page(persona, specific_message=''):
                     persona_specific_message=persona_specific_message,
                     signups_style=signups_style,
                     offer_lesson_or_search=offer_lesson_or_search,
-                    offer_lesson_or_search_handler=offer_lesson_or_search_handler)
+                    offer_lesson_or_search_handler=offer_lesson_or_search_handler,
+                    user=user)
 
 
 @app.route("/register_lesson", methods=['POST'])
@@ -157,21 +168,98 @@ def signup():
     return render_main_page(persona, specific_message=registered_message)
 
 
-@app.route("/login", methods=['POST'])
+def get_session_id_from_cookie(request):
+    sessionId = ''
+    if 'Cookie' in request.headers:
+        cookies = request.headers['Cookie']
+        app.logger.info(cookies)
+        if 'musicmarketplace-sessionId' in cookies:
+            individual_cookies = cookies.split(";")
+            for k in individual_cookies:
+                parts = k.split("=")
+                if parts[0].strip() == "musicmarketplace-sessionId":
+                    sessionId = parts[1].strip()
+                    break
+
+    return sessionId
+
+
+@app.route("/welcome", methods=['POST','GET'])
 def login123():
     app.logger.info("Inside login")
 
-    form = request.form
-    app.logger.info(form)
+    persona = 'unknown'
+    username = ''
+    main_page = ''
 
-    persona = request.form['persona-selector']
+    sessionId = get_session_id_from_cookie(request)
+    app.logger.info("Session ID:" + sessionId)
+    if sessionId in sessions:
+        main_page = sessions[sessionId]
+        app.logger.info("Main page:" + main_page)
+        return Response(main_page, status=200)
+    else:
+        app.logger.info("Session id not found.")
+        form = request.form
+        app.logger.info(form)
 
-    if persona == 'learner':
-        persona_specific_message = "TODO" # TODO - Add learner specific message
-    if persona == 'teacher':
-        persona_specific_message = 'Share your musical knowledge with others.'
+        if request.form != '':
+            if 'persona-selector' in request.form:
+                persona = request.form['persona-selector']
+            if 'username' in request.form:
+                username = request.form['username']
+            if 'password' in request.form:
+                password = request.form['password']
 
-    return render_main_page(persona, specific_message=persona_specific_message)
+            if persona == 'learner':
+                persona_specific_message = "TODO" # TODO - Add learner specific message
+            if persona == 'teacher':
+                persona_specific_message = 'Share your musical knowledge with others.'
+            if persona == 'unknown':
+                persona_specific_message = 'Persona unknown.'
+
+            main_page = render_main_page(persona, 
+                specific_message=persona_specific_message,
+                user=username)
+
+            r = Response(main_page, status=200)
+
+            # Ref https://www.educative.io/answers/how-to-generate-a-random-string-in-python
+            if persona != 'unknown':
+                sessionId = ''.join(random.choice(string.ascii_letters) for i in range(5))
+                sessions[sessionId] = main_page
+                r.set_cookie('musicmarketplace-sessionId', value=str(sessionId), max_age=60, path="/welcome")
+                app.logger.info(r)
+                return r
+            else:
+                return render_template('index.html')
+        else:
+            return logout_handler(sessionId=sessionId)
+
+
+def logout_handler(sessionId=''):
+    app.logger.info("Inside logout_handler")
+    if sessionId != '':
+        del sessions[sessionId]
+        # Save the shopping cart in db
+        # session.commit()
+        # Send a shipment order
+        # Invoke credit card company's API.
+
+    app.logger.info(sessions)
+    return render_template('index.html')
+
+
+@app.route("/logout", methods=['POST'])
+def logout():
+    app.logger.info("Inside logout")
+
+    sessionId = get_session_id_from_cookie(request)
+    app.logger.info("Session ID:" + sessionId)
+
+    return logout_handler(sessionId=sessionId)
+
+
 
 
 @app.route("/")

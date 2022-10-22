@@ -21,9 +21,23 @@
     <div><h5>Share Music / Learn Music</h5></div>
     <br>
     <div>
-      <form action="login" method="post" class="form-signin">
+      <form action="welcome" method="post" class="form-signin">
           <label>Who are you?</label>
+
           <br>
+
+          <label for="username" class="sr-only"><b>Username</b></label>
+          <input type="text" name="username" placeholder="Username" required>
+
+          <br>
+          <br>
+
+          <label for="password" class="sr-only"><b>Password</b></label>
+          <input type="password" name="password" placeholder="Password" required>
+
+          <br>
+          <br>
+
           <input type="radio" name="persona-selector" value="teacher">Music Teacher</input>
           <br>
           <input type="radio" name="persona-selector" value="learner">Music Learner</input>

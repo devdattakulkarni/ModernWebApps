@@ -4,6 +4,8 @@ from flask import Response
 
 import requests
 
+from werkzeug.datastructures import Headers
+
 import os
 import time
 import random
@@ -288,8 +290,41 @@ def delete_lesson_by_id(id):
         status = ("Lesson with id {id} deleted.\n").format(id=id)
         return Response(status, status=200)
 
+def filter_lessons(data_to_search=''):
+    data = {}
+    if data_to_search == '':
+        data['all'] = 'all'
+    if 'instrument' in data_to_search and 'days' in data_to_search:
+        data['instrument'] = data_to_search['instrument']
+        data['days'] = data_to_search['days']
+    if 'instrument' in data_to_search:
+        data['instrument'] = data_to_search['instrument']
+    if 'days' in data_to_search:
+        data['days'] = data_to_search['days']
+    return data
+
+
+@app.route("/lessons1")
+def getLessons1():
+    if ('instrument' in request.args and 'days' in request.args) or ('instrument' in request.args) or ('days' in request.args):
+        return filter_lessons(data_to_search=request.args)
+    else:
+        return filter_lessons()
+
+
 ## TODO: Add methods for person resource and signup resource
 
+@app.route("/cors")
+def test_cors():
+
+    d = Headers()
+    d.add('Content-type', 'text/html')
+    d.add('Access-Control-Allow-Origin',"*")
+
+    resp = "cors_test"
+
+    r = Response(resp, status=200, headers=d)
+    return r
 
 
 @app.route("/login", methods=['POST'])
@@ -302,7 +337,17 @@ def login123():
     contents = fp.read()
     t = Template(contents)
 
-    return t.render(lessons=lessons)
+    d = Headers()
+    d.add('Content-type', 'text/html')
+    d.add('Set-Cookie','friend=true')
+
+    rendered_content = t.render(lessons=lessons)
+
+    r = Response(rendered_content, status=200, headers=d)
+    app.logger.info(r)
+
+    #return t.render(lessons=lessons)
+    return r
 
 
 @app.route("/")
@@ -315,4 +360,4 @@ if __name__ == "__main__":
 
     app.debug = True
     app.logger.info('Portal started...')
-    app.run(host='0.0.0.0', port=5003) 
+    app.run(host='0.0.0.0', port=5004) 
