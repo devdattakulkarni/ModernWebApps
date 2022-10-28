@@ -1,0 +1,12 @@
+requests==2.21.0
+Flask==2.0.1
+gunicorn
+Jinja2==3.0.1
+Werkzeug==2.0.0
+pyyaml
+SQLAlchemy
+bcrypt
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
