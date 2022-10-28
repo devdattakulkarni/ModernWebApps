@@ -62,4 +62,9 @@ Enter any username/password and hit submit button (the web app does not support 
    - If running using Gunicorn
       ```./stop-app.sh```
 
+---
+
+Reference:
+
+- https://developers.google.com/identity/protocols/oauth2/web-server#python_3
 
