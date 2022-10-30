@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Learn Music</title>
+    <style>
+    .button {
+      background-color:#fcba03;
+      width: 150px;
+      height: 45px;
+      padding: 10px;
+      margin: 12px;
+      font-size: 15pt;
+      font-family: Arial;
+    }
+    .label {
+      margin: 15px;
+      float:left;
+      font-size: 16pt;
+    }
+    .input {
+      margin: 15px;
+      width: 200px;
+      height: 20px;
+    }
+    .select {
+      margin: 15px;
+      width: 200px;
+      height: 20px;
+    }
+    </style>
+    <script src="../static/scripts/musicmarketplace.js">
+    </script>
+  </head>
+  <body>
+    <div>
+      <div style="height:10vh; width:100%; background-color: gray;margin-top:-5vh; margin-left:0px; margin-right:10px" >
+          <h1 style="color:white;text-align: center; padding:3vh">Learn Music - {{person}}</h1>
+      </div>
+      <div>
+        <div style="width:15%;height:90vh;flex-direction: vertical; background-color: lightblue;float:left;" id="indexcol">
+          <!--
+          <button class="button" id="offerings-button" onclick="take_input()">Offer Lessons</button>
+          <br></br>-->
+          <button class="button" id="learn-button" onclick="learn_music()">Search</button>
+          <form action="logout" method="post" style="margin-top:65vh">
+            <button class="button">Logout</button>
+          </form>
+        </div>
+      </div>
+      <div style="width:70%;height:90vh;flex-direction: vertical; background-color: white;float:left;" id="contentcol">
+        <div id="welcome" style="display:block">
+          <h2 style="padding-left:40px;">Welcome to Music Marketplace.</h2>
+        </div>
+
+        <form action="search_lessons_for" method="post"> 
+          <div id="search" style="display:none;">
+            <label class="label">Lesson Name</label>
+            <input class="input" type="text" name="lesson-name-input"></input>
+            <button>Search</button>
+          </div>
+        </form>
+
+        <div id="take-input" style="display:none;">
+          <table style="padding-top: 20px; padding-left: 200px">
+            <tr>
+              <td><label class="label">Lesson Name</label></td>
+              <td><input class="input" type="text" id="lesson-name-input"></input></td>
+            </tr>
+            <tr>
+              <td><label class="label">Instrument</label></td>
+              <td>
+                <select id="instrument-list-select" class="input">
+                  <option value="guitar">Guitar</option>
+                  <option value="piano">Piano</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label class="label">Timings</label></td>
+              <td>
+                <input type="radio" name="timings-radio" value="30" style="float:left" >30 mins</input>
+                <input type="radio" name="timings-radio" value="45" >45 mins</input>
+                <input type="radio" name="timings-radio" value="60" >60 mins</input>
+              </td>
+              <tr>
+                <td><label class="label">Days of the Week</label></td>
+                <td>
+                  <br></br>
+                  <input type="checkbox" name="monday" id="monday" value="Monday">Monday</input><br></br>
+                  <input type="checkbox" name="tuesday" id="tuesday" value="Tuesday">Tuesday</input>
+                </td>
+              </tr>
+              <tr>
+                <td><label class="label">Demo URL</label></td>
+                <td><input class="input" type="text" id="demo-url"></input></td>
+              </tr>
+          </table>
+        <br></br>
+        <div style="text-align: center;">
+          <button class="button" onclick="store_lesson()">Register</button>
+        </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="height:90vh; width:15%; background-color:lightblue;float:left;" id="mylessonscol">
+          <!--
+          <label class="label" id="my-lessons-button" style="background-color: lightgreen; padding:20px;margin-left:22px">My Lessons</label>
+          <div>
+            <ul id="lesson_list">
+              {% for lesson in lessons %}
+                <li><a href="#" onclick="show_lesson_details('{{ lesson.demo_url }} ', '{{ lesson.days }}', '{{ lesson.timings }}')">{{ lesson.name }}</a></li>
+              {% endfor %}
+            </ul>
+            <hr></hr>-->
+            <div>
+              <h3>Session Search History:</h3>
+              <ul id="search_history">
+                {% for instrument in lesson_search_history%}
+                <li>{{instrument}}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
