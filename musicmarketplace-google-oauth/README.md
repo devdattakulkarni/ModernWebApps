@@ -10,8 +10,10 @@ Steps
 3. Install dependencies
 ```pip3 install -r requirements.txt```
 
-4. Create Google OAuth client
+4. Create Google OAuth client (Use your personal gmail address and not UT email address)
    - Login to https://console.cloud.google.com/apis/
+   - Create Google Cloud Project
+   - Configure OAuth consent screen
    - Go to "Credentials->Create Credentials->OAuth client ID"
    - On "Create OAuth client ID" screen
      - Choose "Application type->Web application"
@@ -30,7 +32,7 @@ Steps
 
 ```curl http://localhost:5003```
 
-7. Login to the Web app using your Google/Gmail credentials
+7. Login to the Web app using your Gmail credentials
 
 8. If the login is successful, you should see the musicmarketplace html page with
    your gmail username in the top.
@@ -39,28 +41,22 @@ Steps
 
 10. Try logout and login again.
 
---or--
 
-Open http://localhost:5003 in browser
+Debug web app
 
-Enter any username/password and hit submit button (the web app does not support login functionality yet).
+  - Put breakpoint in code:
+    ```import pdb; pdb.set_trace()```
 
+  - Check logs:
+    ```more myapp.log```
 
-6. Debug web app
-
-   - Put breakpoint in code:
-     ```import pdb; pdb.set_trace()```
-
-   - Check logs:
-     ```more myapp.log```
-
-7. Stop web app
+Stop web app
  
-   - If running directly using python interpreter
-     ```Hit Cntrl+C```
+  - If running directly using python interpreter
+    ```Hit Cntrl+C```
 
-   - If running using Gunicorn
-      ```./stop-app.sh```
+  - If running using Gunicorn
+    ```./stop-app.sh```
 
 ---
 
