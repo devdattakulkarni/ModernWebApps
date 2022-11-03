@@ -217,7 +217,14 @@ def revoke():
       # reset individual_search_history
       individual_search_history = []
 
-    return render_template('login.html')
+    login_page = render_template('login.html')
+    response = Response(login_page, status=200)
+
+    # https://stackoverflow.com/questions/20652784/flask-back-button-returns-to-session-even-after-logout
+    response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+
+    return response
+
   else:
     return('An error occurred.') #+ print_index_table())
 
@@ -269,4 +276,4 @@ if __name__ == '__main__':
 
   # Specify a hostname and port that are set as a valid redirect URI
   # for your API project in the Google API Console.
-  app.run('localhost', 5003, debug=True)
+  app.run('0.0.0.0', 5003, debug=True)
