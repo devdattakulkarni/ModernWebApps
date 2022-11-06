@@ -86,7 +86,7 @@ def index():
   return render_template("login.html")
 
 
-@app.route('/test')
+@app.route('/welcome')
 def test_api_request():
   if 'credentials' not in flask.session:
     return flask.redirect('login-with-google')
@@ -153,7 +153,14 @@ def authorize():
   # for the OAuth 2.0 client, which you configured in the API Console. If this
   # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
   # error.
-  flow.redirect_uri = flask.url_for('oauth2callback', _external=True)
+  redirect_uri = flask.url_for('oauth2callback', _external=True)
+  parts = redirect_uri.split("/oauth2callback")
+  print(parts)
+  if ":5003" not in redirect_uri:
+    flow.redirect_uri = parts[0] + ":5003/oauth2callback"
+  else:
+    flow.redirect_uri = redirect_uri
+  print(flow.redirect_uri)
 
   authorization_url, state = flow.authorization_url(
       # Enable offline access so that you can refresh an access token without
