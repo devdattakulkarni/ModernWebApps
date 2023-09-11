@@ -1,0 +1,153 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <style type="text/css">
+
+/* Style the form */
+#regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+/* Style the input fields */
+.input {
+  padding: 10px;
+  width: 50%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+  margin: 5px;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+  </style>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+	<body>
+		<div class="container-fluid" style="background-color:transparent">
+		      <div class="row">
+        		<div class="col">
+          			<div class="text-left">
+            				<a href="https://www.cs.utexas.edu/~devdatta" target="_blank">
+          		                  <img src="{{ url_for('static', filename='images/longhorn.png') }}" class="rounded mx-auto d-block" style="width:10%;height:5vh;float:left;padding-left:-10px"></a>
+          			</div>
+        		</div>
+			<div><h5 style="margin-top:5px;">{{ welcome_message }}</h5></div>
+        		<div class="col text-right">
+          			<div class="dropdown">
+            				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">  {{ name }}
+              				<span class="caret"></span>
+            				</button>
+            				<ul class="dropdown-menu text-center" aria-labelledby="dropdownMenu1">
+            				  <li><a href="#" onclick="show_settings()">Settings</a></li>
+             				  <li><hr class="dropdown-divider"></li>
+              				  <li><a href="#" onclick="logout()">Logout</a></li>
+            				</ul>
+          			</div>
+        			</div>
+      			</div>
+		</div>
+		<hr></hr>
+
+		<div class="container-fluid">
+		<div class="row  mvh-100 flex-column flex-md-row">
+        	<div class="col-md-2 div_left" style="height:90vh;background-color: lightblue;float:left; margin-top:-16px;">
+			<div class="row" id="newrun" style="{{regButton_style}}">
+				<button onclick="display_new_register_form()" style="margin-left:5px;margin-top:5px">Register City</button>
+			</div>
+			<div class="row" id="addCity" style="{{addButton_style}}">
+				<button onclick="display_add_city_form()" style="margin-left:5px;margin-top:5px">Add City</button>
+			</div>
+			<hr></hr>
+          		<div class="row"> <!-- row2 -->
+			<div>
+			              <ul id="city_list">
+                			{% for city in cities %}
+					 <li><a onclick="get_city_status(this)" id={{city.name}} href="#" style="text-decoration:underline"> {{ city.name }}</a> </li>
+                			{% endfor %}
+              				</ul>
+			</div>
+          		</div> <!-- row2 -->
+		</div>
+
+		<div class="col-md-10 flex-grow-1 div_right" id="entity-form-container">
+
+			<div id="status" style="{{status_style}}">
+				<div id="status_string">{{status_string}}</div>
+				<div id="outputImg"></div>
+			</div>
+
+		<div style="{{addCityForm_style}}" id="addCityFormDiv">
+		<form id="addCityForm" action="addcity" style="margin-top:-10px;">
+
+		<label>City Name</label>
+		<input class="input" type="text" placeholder="city name" name="city_name" id="city_name_to_add" required>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		</div>
+
+		<div style="{{regForm_style}}" id="newRunFormDiv">
+		<form id="regForm" action="registercity" style="margin-top:-10px;" onsubmit="return validate()">
+
+		<label>City Name</label>
+		<input class="input" type="text" placeholder="city name" name="city_name" id="city_name" required>
+		<br></br>
+		<br></br>
+		<div class="tab1"><b style="color:blue;">Inputs:</b>
+			<table>
+			<tr>
+				<td><label>Year</label></td>
+				<td><input class="input" type="text" placeholder="YYYY" name="year" id="year" style="width:125%" required></input></td></tr>
+			<tr>
+				<td><label>Month</label></td>
+				<td><input class="input" type="text" placeholder="MM" name="month" id="month" style="width:125%" required></td></tr>
+
+	              <tr>
+        		        <td><label class="label">Weather Parameters</label></td>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+                		<td>
+                  		<input type="checkbox" name="max_temp" id="max_temp" value="max_temp">Max Temperature</input><br></br>
+				<input type="checkbox" name="min_temp" id="min_temp" value="min_temp">Min Temperature</input><br></br>
+				<input type="checkbox" name="precipitation" id="precipitation" value="precipitation">Precipitation</input><br></br>
+                  		<input type="checkbox" name="snow" id="snow" value="snow">Snow</input>
+                		</td>
+              	     </tr>
+
+			</table>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+
+		</form>
+		</div>
+		</div>
+		</div>
+
+
+  		<script src=../static/scripts/inputhandler.js></script>
+	</body>
+
+</html>
