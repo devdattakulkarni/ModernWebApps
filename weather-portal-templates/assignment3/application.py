@@ -64,7 +64,10 @@ Base = declarative_base()
 engine = create_engine("sqlite:///weatherportal.db", echo=True, future=True)
 DBSession = sessionmaker(bind=engine)
 
-Base.metadata.create_all(engine)
+
+@app.before_first_request
+def create_tables():
+    Base.metadata.create_all(engine)
 
 
 class Admin(Base):
