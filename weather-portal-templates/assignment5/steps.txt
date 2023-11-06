@@ -1,0 +1,31 @@
+curl "http://localhost:5009/admin" -X POST -H "Content-Type: application/json" --data @admin.json
+curl "http://localhost:5009/admin"
+curl "http://localhost:5009/admin/1"
+curl "http://localhost:5009/admin/1" -X DELETE
+
+curl "http://localhost:5009/users" -X POST -H "Content-Type: application/json" --data @user.json
+curl "http://localhost:5009/users"
+curl "http://localhost:5009/users/1"
+curl "http://localhost:5009/users/1" -X DELETE
+
+curl "http://localhost:5009/admin/1/cities" -X POST -H "Content-Type: application/json" --data @austin.json
+curl "http://localhost:5009/admin/1/cities" -X POST -H "Content-Type: application/json" --data @dallas.json
+curl "http://localhost:5009/admin/1/cities" -X POST -H "Content-Type: application/json" --data @houston.json
+curl "http://localhost:5009/admin/1/cities" 
+curl "http://localhost:5009/admin/1/cities/1" 
+curl "http://localhost:5009/admin/1/cities/10" 
+curl "http://localhost:5009/admin/2/cities/1" 
+
+curl "http://localhost:5009/admin/2/cities" -X POST -H "Content-Type: application/json" --data @san-antonio.json
+
+curl "http://localhost:5009/users/1/cities" -X POST -H "Content-Type: application/json" --data @user-city-austin.json
+curl "http://localhost:5009/users/1/cities" -X POST -H "Content-Type: application/json" --data @user-city-dallas.json
+curl "http://localhost:5009/users/1/cities" -X POST -H "Content-Type: application/json" --data @user-city-san-antonio.json
+
+
+curl "http://localhost:5009/users/1/cities?name=Austin"
+curl "http://localhost:5009/users/2/cities?name=Austin"
+curl "http://localhost:5009/users/1/cities?name=Houston"
+curl "http://localhost:5009/users/1/cities?name=San%20Antonio"
+ 
+
