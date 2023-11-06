@@ -912,7 +912,9 @@ def login():
         print("User email:" + user_email)
         username = user_email
 
-        # Insert User in the DB
+        # Assignment 5: 
+        # - Insert User in the DB
+        # - Leave password empty
 
         flask.session['credentials'] = credentials_to_dict(credentials)
 
