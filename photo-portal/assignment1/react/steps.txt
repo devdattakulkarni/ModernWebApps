@@ -1,0 +1,9 @@
+1. Install nodejs and npm
+2. npm i --save bootstrap jquery popper.js
+3. npm install bootstrap
+4. npx create-react-app my-app
+5. cp App.js my-app/src/.
+6. cp index.html my-app/public/.
+7. cp App.css my-app/src/.
+8. cp index.js my-app/src/.
+
