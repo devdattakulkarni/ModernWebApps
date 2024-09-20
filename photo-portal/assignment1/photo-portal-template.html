@@ -1,0 +1,290 @@
+
+<!-- Source: https://www.w3schools.com/howto/howto_js_form_steps.asp -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>Personal Photo Portal</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<style type="text/css">
+		/* Style the form */
+		#regForm {
+			background-color: #ffffff;
+			margin: 100px auto;
+			padding: 40px;
+			width: 70%;
+			min-width: 300px;
+		}
+
+		/* Style the input fields */
+		.input {
+			padding: 10px;
+			width: 50%;
+			font-size: 17px;
+			font-family: Raleway;
+			border: 1px solid #aaaaaa;
+			margin: 5px;
+		}
+
+		/* Mark input boxes that gets an error on validation: */
+		input.invalid {
+			background-color: #ffdddd;
+		}
+	</style>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+
+		// Store the photos in memory in this map
+		var photos = {};
+
+		// Requirement 7
+		// Store the photo metadata in this map (key: photo_name; value: {date_taken:<>, tags:<>})
+		var photos_metadata = {}; 
+
+		// TODO: Requirement 5: Add search function with alert
+
+		function store_photo() {
+			let photo = document.getElementById("photo_name").files[0];
+			if (photo == null) {
+                                alert("Photo input not provided.");
+                                return;
+                        }
+
+			photo_name = photo.name;
+			console.log("About to store photo.")
+			console.log(photo_name);
+			// TODO: Requirement 3: Add check that the uploaded file is of type "image"
+			// hint: Look for photo.type: See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+
+			date_taken = document.getElementById("date_taken").value;
+			console.log(date_taken);
+			date_parts = date_taken.split("/");
+                        if (date_parts.length < 3 || date_parts.length > 3) {
+                                alert("Incorrect date format specified.");
+                                return;
+                        }
+                        if (date_parts.length == 3) {
+                                month = date_parts[0];
+                                day = date_parts[1];
+                                year = date_parts[2];
+
+ 				month_day_regex1 = /^\d{1}$/;
+                                m_format1 = month.match(month_day_regex1);
+                                month_day_regex2 = /^\d{2}$/;
+                                m_format2 = month.match(month_day_regex2);
+                                if (!m_format1 && !m_format2) {
+                                        alert("Month format is incorrect. Should be one or two digits.");
+                                        return;
+                                }
+				// TODO: Requirement 2: Add checks for the Date input.
+				// 2.1 hint: Look at the following ways to convert string to number.
+				// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+				// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+				
+                                // 2.2 Add check for year - should be 4 digits (hint: follow the regex pattern used above)
+                                // 2.3 Add check for day - should be 1 or 2 digits (hint: follow the regex pattern used above)
+
+			}
+
+			// TODO: Requirement 1: Make sure that the tags input that you will add has the id "tags"
+			tags_val = document.getElementById("tags").value;
+			console.log("Tags:" + tags_val);
+
+			// TODO: Requirement 7: Save the date_taken and tags in photos_metadata dictionary with key as photo_name.
+
+			// TODO: Requirements 6.1, 6.2: Change the labels to anchor elements with photo name as the anchor text
+			photo_details = document.createElement("li");
+			photo_details.setAttribute("id", photo_name + "-li");
+			photo_label = document.createElement("label");
+			photo_label.setAttribute("onclick", "show_photo('" + photo_name + "')");
+			photo_label.textContent = photo_name;
+			photo_details.appendChild(photo_label);
+			document.getElementById("photo_list").appendChild(photo_details);
+
+			// Add thumbnail
+			thumbnail = document.createElement("li");
+			thumbnail.setAttribute("id", photo_name + "-thumbnail-li");
+			thumbnail_label = document.createElement("label");
+			thumbnail_label.textContent = photo_name;
+			thumbnail_img = document.createElement("img");
+
+			// TODO: Requirement 8: Set the height and width of the thumbnail_img
+			// hint: See img attributes https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img
+			thumbnail_img_id = photo_name + "-thumbnail-img";
+			photos[thumbnail_img_id] = photo;
+			thumbnail_img.setAttribute("id", thumbnail_img_id);
+			thumbnail_img.setAttribute("data-toggle", "modal");
+
+			// TODO: Requirement 9: Set the data-target for the thumbnail to be imageModal
+			// hint: See https://getbootstrap.com/docs/4.0/components/modal/#scrolling-long-content
+
+			thumbnail_img.setAttribute("onclick", "preview_photo('" + thumbnail_img_id + "')");
+			thumbnail_img.src = URL.createObjectURL(photo);
+			thumbnail_img.onload = () => {
+				URL.revokeObjectURL(thumbnail_img.src);
+			}
+			thumbnail.appendChild(thumbnail_label);
+			thumbnail.appendChild(thumbnail_img);
+			document.getElementById("available_photos_list").appendChild(thumbnail);
+
+			// Requirement 6.3: Reset values of the input fields;
+                        document.getElementById("photo_name").value = "";
+			// Add similar for date_taken and tags.
+
+		}
+
+		// TODO: Requirement 7: Show photo details
+		function show_photo(photo_name) {
+			// Assignment1 TODO: Add date_taken, tags to the alert.
+			// hint: use the photo_name to dereference photos_metadata dictionary to find the date and tags
+
+			alert("Photo:" + photo_name + " TODO: Add date, tags");
+		}
+
+		function preview_photo(thumbnail_img_id) {
+			// Delete previous image
+			var previousImg = document.getElementById("preview-image");
+			if (previousImg != null) {
+				previousImg.parentNode.removeChild(previousImg);
+			}
+
+			// TODO: Requirement 9: Show the original photo; 
+		}
+
+		function show_settings() {
+			alert("Settings called.");
+		}
+
+		function logout() {
+			alert("Logout called.");
+		}
+
+		function display_upload_photo_form() {
+			uploadPhotoFormDiv = document.getElementById("uploadPhotoFormDiv");
+			uploadPhotoFormDiv.setAttribute("style", "display:block;");
+
+			statusDiv = document.getElementById("status");
+			statusDiv.setAttribute("style", "display:none;");
+		}
+	</script>
+</head>
+
+<body>
+
+	<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="imageModalLabel">Image preview</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					</button>
+				</div>
+				<div class="modal-body" id="image-modal-body">
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid" style="background-color:transparent">
+		<div class="row">
+			<div class="col">
+				<div class="text-left">
+					<a href="https://www.cs.utexas.edu/~devdatta" target="_blank">MWA</a>
+				</div>
+			</div>
+			<div>
+				<h5 style="margin-top:5px;">Photo Portal</h5>
+			</div>
+			<div class="col text-right">
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						testuser
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu text-center" aria-labelledby="dropdownMenu1">
+						<li><a href="#" onclick="show_settings()">Settings</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li><a href="#" onclick="logout()">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="container-fluid">
+		<div class="row  mvh-100 flex-column flex-md-row">
+			<div class="col-md-2 div_left" style="height:90vh;background-color: lightblue;float:left; margin-top:-16px;">
+				<div class="row" id="uploadPhoto">
+					<button onclick="display_upload_photo_form()" style="margin-left:5px;margin-top:5px">Upload Photo</button>
+				</div>
+				<hr>
+
+				<!-- TODO: Requirement 5: Add Search photos inputs -->
+				<div class="row">
+				</div>
+
+				<div class="row"> <!-- row2 -->
+					<div>
+						<ol id="photo_list">
+						</ol>
+					</div>
+				</div> <!-- row2 -->
+			</div>
+
+			<div class="col-md-8 flex-grow-1 div_right" id="entity-form-container">
+				<div id="status">
+					<div id="status_string">Click upload photo to open the upload form.</div>
+					<div id="outputImg"></div>
+				</div>
+
+				<div style="display:none;" id="uploadPhotoFormDiv">
+
+					<label>Photo Name</label>
+					<input class="input" type="file" name="photo_name" id="photo_name" required>
+					<br>
+					<br>
+					<div class="tab1">
+						<b style="color:blue;">Photo metadata</b>
+						<table>
+							<tr>
+								<td><label>Date taken</label></td>
+								<td><input type="text" name="date_taken" placeholder="MM/DD/YYYY" id="date_taken"></td>
+							</tr>
+							<!-- TODO: Requirement 1: Add tags field  -->
+						</table>
+						<button onclick="store_photo()" class="btn btn-primary">Submit</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-md-2 flex-grow-1 div_right" id="entity-form-container-2" style="height:90vh;background-color: lightblue;float:left; margin-top:-16px;">
+				<div class="row"> <!-- row2 -->
+					<div>
+						<h6>Thumbnails:</h6>
+						<ol id="available_photos_list">
+						</ol>
+					</div>
+				</div> <!-- row2 -->
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+
