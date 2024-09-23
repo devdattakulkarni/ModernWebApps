@@ -1,0 +1,24 @@
+WRF Web App
+============
+
+Run 
+----
+1. python3 -m venv venv
+2. source venv/bin/activate
+3. pip3 install -r requirements.txt
+4. python3 application.py
+
+
+Try
+---
+1. Open application url: 
+   -http://localhost:5009/admin
+2. Access the web app in the browser
+3. Login/Logout using any string as username/password 
+4. Login again using same user.
+
+Stop
+----
+1. Ctrl+C in the window where application.py was started
+
+
