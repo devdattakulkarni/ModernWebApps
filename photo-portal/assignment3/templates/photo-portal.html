@@ -1,0 +1,181 @@
+<!-- Source: https://www.w3schools.com/howto/howto_js_form_steps.asp -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>Personal Photo Portal</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<style type="text/css">
+		/* Style the form */
+		#regForm {
+			background-color: #ffffff;
+			margin: 100px auto;
+			padding: 40px;
+			width: 70%;
+			min-width: 300px;
+		}
+
+		/* Style the input fields */
+		.input {
+			padding: 10px;
+			width: 50%;
+			font-size: 17px;
+			font-family: Raleway;
+			border: 1px solid #aaaaaa;
+			margin: 5px;
+		}
+
+		/* Mark input boxes that gets an error on validation: */
+		input.invalid {
+			background-color: #ffdddd;
+		}
+	</style>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script src="../static/scripts/photo-portal.js"></script>
+</head>
+
+<body>
+	<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="imageModalLabel">Image preview</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					</button>
+				</div>
+				<div class="modal-body" id="image-modal-body">
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal to display the tags for update. -->
+	<!-- Requirement 2 --> 
+
+	<div class="container-fluid" style="background-color:transparent">
+		<div class="row">
+			<div class="col">
+				<div class="text-left">
+					<a href="https://www.cs.utexas.edu/~devdatta" target="_blank">MWA</a>
+				</div>
+			</div>
+			<div>
+				<h5 style="margin-top:5px;">Photo Portal</h5>
+			</div>
+			<div class="col text-right">
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						{{username}}
+						<span class="caret"></span>
+					</button>
+					<form id="settings-and-logout-form" action="logout" method="post">
+					<ul class="dropdown-menu text-center" aria-labelledby="dropdownMenu1">
+						<li><a href="#" onclick="show_settings()">Settings</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li><a href="#" onclick="logout()">Logout</a></li>
+					</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="container-fluid">
+		<div class="row  mvh-100 flex-column flex-md-row">
+			<div class="col-md-2 div_left" style="height:90vh;background-color: lightblue;float:left; margin-top:-16px;">
+
+				<div class="row">
+					<form id="search_form" action="search" method="post">
+					<label style="padding-left:10px;">Search</label>
+					<select id="search_select" name="search_select" style="margin-left:10px;">
+						<option value="Name">Name</option>
+						<option value="Date">Date</option>
+						<option value="Tags">Tags</option>
+					</select>
+					<input type="text" name="search_input" id="search_input" style="margin-left:10px">
+					<button name="search" style="margin-left:10px" onclick="return validate_data()">Search</button>
+					</form>
+				</div>
+				<hr>
+
+				<div class="row"> <!-- row2 -->
+					<div>
+						<!-- Requirement 3.1 and 4.1 --> 
+						<form id="update_delete_form" action="delete_photos" method="POST">
+							<ol id="photo_list">
+							</ol>
+						</form>
+					</div>
+				</div> <!-- row2 -->
+			</div>
+
+			<div class="col-md-8 flex-grow-1 div_right" id="entity-form-container">
+				<div id="status_string">{{photo_upload_status}}</div>
+				<div style="{{slide_show_display}}" id="slideshowDiv">
+					<button id="startSlideShow" onclick="start_slide_show()">Start slide show</button>
+					<button id="stopSlideShow" onclick="stop_slide_show()">Stop slide show</button>
+					<hr></hr>
+					<div id="slideshowImage"></div>
+				</div>
+
+				<div style="{{upload_form_display}}" id="uploadPhotoFormDiv">
+
+					<form id="uploadPhotoForm" action="upload" method="post" enctype="multipart/form-data" style="margin-top:-10px;" >
+
+					<label>Photo Name</label>
+					<input class="input" type="file" name="photo_name" id="photo_name" required>
+					<br>
+					<br>
+					<div class="tab1"><b style="color:blue;">Photo metadata</b>
+						<table>
+							<tr>
+								<td><label>Date taken</label></td>
+								<td><input type="text" name="date_taken" placeholder="MM/DD/YYYY" id="date_taken"></td>
+							</tr>
+							<tr>
+								<td><label>Tags</label></td>
+								<td><input type="text" name="tags" placeholder="comma separated tags" id="tags"></td>
+							</tr>
+						</table>
+						<button class="btn btn-primary">Submit</button>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-md-2 flex-grow-1 div_right" id="entity-form-container-2" style="height:90vh;background-color: lightblue;float:left; margin-top:-16px;">
+				<div class="row"> <!-- row2 -->
+					<div>
+						<h6>Thumbnails:</h6>
+						<ol id="available_photos_list">
+							{% for photo in photo_list %}
+								<figure>
+								<li id="{{photo.name}}-thumbnail-li"><img src="../static/images/photos/{{photo.name}}" height="60" width="60" data-toggle="modal" data-target="#imageModal" onclick="preview_photo('{{photo.name}}')"></img>
+								</li><figcaption>{{photo.name}}</figcaption>
+								</figure>
+							{% endfor %}
+						</ol>
+					</div>
+				</div> <!-- row2 -->
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
