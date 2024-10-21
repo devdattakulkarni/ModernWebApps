@@ -56,7 +56,9 @@ app = Flask(__name__)
 
 app.secret_key = secrets.token_hex()
 
-app.logger.setLevel(logging.CRITICAL)
+# Ref: https://stackoverflow.com/questions/14888799/disable-console-messages-in-flask-server
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # SQLite Database creation
 Base = declarative_base()
@@ -118,7 +120,6 @@ def load_photos():
 # REST API to get photos - Sends photo names back
 @app.route("/photos", methods=["GET"])
 def get_photos():
-
     photos = load_photos()
     photo_names = []
     for photo in photos:
