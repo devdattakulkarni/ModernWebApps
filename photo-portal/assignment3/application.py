@@ -18,6 +18,7 @@ import logging
 from logging.config import dictConfig
 
 import os
+import json
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -87,7 +88,7 @@ class PhotoData(Base):
 
 
 # Class that represents in-memory representation of a photo
-class Photo:
+class Photo():
 	def __init__(self, photo_name='', date_taken='', tags=''):
 		self.name = photo_name
 		self.date_taken = date_taken
@@ -121,12 +122,12 @@ def load_photos():
 @app.route("/photos", methods=["GET"])
 def get_photos():
     photos = load_photos()
-    photo_names = []
+    photo_json_list = []
     for photo in photos:
-        photo_names.append(photo.name)
+        photo_json_list.append(json.dumps(photo.__dict__))
 
     ret_obj = {}
-    ret_obj["photos"] = photo_names
+    ret_obj["photos"] = photo_json_list
     return ret_obj
 
 
@@ -334,3 +335,4 @@ if __name__ == "__main__":
     app.debug = False
     app.logger.info('Portal started...')
     app.run(host='0.0.0.0', port=5009)
+

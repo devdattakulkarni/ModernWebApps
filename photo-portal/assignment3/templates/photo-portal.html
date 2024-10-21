@@ -165,10 +165,12 @@
 						<h6>Thumbnails:</h6>
 						<ol id="available_photos_list">
 							{% for photo in photo_list %}
+								<li id="{{photo.name}}-thumbnail-li">
 								<figure>
-								<li id="{{photo.name}}-thumbnail-li"><img src="../static/images/photos/{{photo.name}}" height="60" width="60" data-toggle="modal" data-target="#imageModal" onclick="preview_photo('{{photo.name}}')"></img>
-								</li><figcaption>{{photo.name}}</figcaption>
+								<img src="../static/images/photos/{{photo.name}}" height="60" width="60" data-toggle="modal" data-target="#imageModal" onclick="preview_photo('{{photo.name}}')"></img>
+								<figcaption>{{photo.name}}</figcaption>
 								</figure>
+							    </li>
 							{% endfor %}
 						</ol>
 					</div>

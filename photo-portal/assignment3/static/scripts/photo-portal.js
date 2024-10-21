@@ -16,19 +16,26 @@ function make_photos_call() {
             fieldData = JSON.parse(this.responseText);
             photo_images = fieldData["photos"];
 
-            available_photos_div = document.getElementById("available_photos_list");
+            // Arrays to store the ids of the photos that are currently present in the backend;
+            present_thumbnail_photo_list = [];
+            present_photo_anchor_list = [];
 
             for(i=0;i<photo_images.length; i++) {
-              photo_name = photo_images[i];
+              photo_obj = JSON.parse(photo_images[i])
+              photo_name = photo_obj['name'];
+              photo_tags = photo_obj['tags'];
+              photo_date_taken = photo_obj['date_taken'];
 
               figure_elem = document.createElement("figure");
               figure_caption_elem = document.createElement("figurecaption");
               figure_caption_elem.textContent = photo_name;
 
-              // Add thumbnail, if not already present.
-              if (document.getElementById(photo_name + "-thumbnail-li") == null) {
+              // Add thumbnail, if not already present as child of "available_photos_list" ol
+              thumbnail_id = photo_name + "-thumbnail-li";
+              present_thumbnail_photo_list.push(thumbnail_id);
+              if (document.getElementById(thumbnail_id) == null) {
                   thumbnail = document.createElement("li");
-                  thumbnail.setAttribute("id", photo_name + "-thumbnail-li");
+                  thumbnail.setAttribute("id", thumbnail_id);
                   thumbnail_label = document.createElement("label");
                   thumbnail_label.textContent = photo_name;
                   thumbnail_img = document.createElement("img");
@@ -45,7 +52,43 @@ function make_photos_call() {
 
                   document.getElementById("available_photos_list").appendChild(thumbnail);
               }
+
+              // Add photo link, if not already present as child of "photo_list" ol
+              photo_anchor_id = photo_name + "-photo-anchor";
+              present_photo_anchor_list.push(photo_anchor_id);
+              if (document.getElementById(photo_anchor_id) == null) {
+                photo_anchor_li = document.createElement("li");
+                photo_anchor_li.setAttribute("id", photo_anchor_id);
+                photo_anchor = document.createElement("a");
+                photo_anchor.textContent = photo_name;
+                photo_anchor.setAttribute("href","#");
+                photo_anchor.setAttribute("id", photo_anchor_id + "-a-element")
+                photo_onclick_handler = "show_photo_details('" + photo_name + "','" + photo_date_taken + "','" + photo_tags + "')";
+                photo_anchor.setAttribute("onclick", photo_onclick_handler);
+                photo_anchor_li.appendChild(photo_anchor);
+
+                document.getElementById("photo_list").appendChild(photo_anchor_li);
+              } else {
+                // Update the onclick_handler - may be tags have changed;
+                photo_onclick_handler = "show_photo_details('" + photo_name + "','" + photo_date_taken + "','" + photo_tags + "')";
+                elem = document.getElementById(photo_anchor_id + "-a-element");
+                elem.setAttribute("onclick",photo_onclick_handler);
+              }
           }
+
+          // Requirement 4.2
+          // Remove photos from thumbnail list that have been deleted;
+          // Remove photos from left-side list that have been deleted;
+          // Make use of present_thumbnail_photo_list and present_photo_anchor_list
+          // For thumbnails:
+          // Iterate through the children of "available_photos_list"; check if the id is
+          // present in present_thumbnail_photo_list; If not present, delete the node.
+
+          // For photo_list:
+          // Iterate through the children of "photo_list"; check if the id is present
+          // in present_photo_anchor_list; If not present, delete the node.
+
+
         }
       }
       xhr.send();
@@ -70,7 +113,7 @@ function start_slide_show() {
 // index: index in the photos_images to diplay a photo.
 function display_photo(index, photo_images) {
 
-          photo_name = photo_images[index];
+          photo_name = JSON.parse(photo_images[index])['name'];
           figure_elem = document.createElement("figure");
           figure_elem.setAttribute("id","big-img");
           figure_caption_elem = document.createElement("figurecaption");
