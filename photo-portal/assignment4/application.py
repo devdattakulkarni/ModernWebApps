@@ -410,7 +410,7 @@ def upload_photo():
 
 
 # Requirement 3.2
-# - Connect the "login-using-google" form with this method
+# - Connect the "login_with_google" form with this method
 # - For http methods list in the definition, use POST and GET
 def authorize():
     if not os.path.exists(CLIENT_SECRETS_FILE):
