@@ -108,6 +108,7 @@ class PhotoData(Base):
 
 # Requirement 1: Add a User class to represent User table.
 # Table name should be 'user'
+# In the as_dict method, skip the password field/attribute when returning the dict.
 
 
 # Class that represents in-memory representation of a photo
@@ -152,7 +153,7 @@ def get_user_info(credentials):
     if user_info and user_info.get('id'):
         return user_info
     else:
-        raise NoUserIdException()
+        raise Exception()
 
 
 def credentials_to_dict(credentials):
@@ -167,7 +168,7 @@ def credentials_to_dict(credentials):
 
 ## Requirement 2.1: Add a POST REST API to add users
 ## Requirement 2.1.1: Make sure that User with name does not exists in the DB
-## Requirement 2.2: Use bcrypt to encrypt the password.
+## Requirement 2.2: Use bcrypt to hash the password.
 
 ## POST /users REST API
 @app.route("/users", methods=['POST'])
@@ -505,8 +506,8 @@ def login():
 
     photos = load_photos()
 
-    type_of_user = "admin"
     if 'username' in request.form:
+        type_of_user = "admin"
         username = request.form['username'].strip()
         password = request.form['password'].strip()
         user = username
@@ -521,6 +522,7 @@ def login():
         
     # Load credentials from the session.
     if 'credentials' in flask.session:
+        type_of_user = "general"
         credentials = google.oauth2.credentials.Credentials(**flask.session['credentials'])
 
         user_email = get_user_info(credentials)['email']

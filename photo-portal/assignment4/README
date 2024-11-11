@@ -17,9 +17,14 @@ Try
 ---
 1. Open application url: 
    -http://localhost:5009/
-2. Access the web app in the browser
-4. Login/Logout
-5. Login again using same user.
+
+2. Add Admin user (this will work after adding POST REST API)
+   - curl -k https://localhost:5009/users -X POST -H "Content-Type: application/json" --data @admin.json
+
+3. Get users (this will work after adding GET REST API)
+   - curl -k https://localhost:5009/users
+
+4. From the application url, login as Admin1 user.
 
 Stop
 ----
