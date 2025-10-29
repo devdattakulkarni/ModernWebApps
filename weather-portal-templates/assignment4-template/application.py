@@ -258,9 +258,6 @@ class ETL():
 
 etl = ETL()
 
-# Start the ETL process
-p = Process(target=etl.run)
-p.start()
 
 
 
@@ -807,4 +804,7 @@ if __name__ == "__main__":
 
     app.debug = False
     app.logger.info('Portal started...')
+    # Start the ETL process
+    p = Process(target=etl.run)
+    p.start()
     app.run(host='0.0.0.0', port=5009) 
