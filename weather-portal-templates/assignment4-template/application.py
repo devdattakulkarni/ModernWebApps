@@ -190,6 +190,7 @@ class ETL():
     def _get_cities(self):
         dbsession = DBSession()
         cities = dbsession.query(City)
+        dbsession.close()
         return cities
 
     def _load_data(self):
@@ -249,6 +250,7 @@ class ETL():
                         weather_params = WeatherParameter(year_month_param=key, values=valString, cityId=city.id)
                         dbsession.add(weather_params)
                         dbsession.commit()
+        dbsession.close()
 
     def run(self):
         while True:
@@ -282,6 +284,7 @@ def add_admin():
         session.add(admin)
         session.commit()
 
+    session.close()
     return admin.as_dict()
 
 
@@ -296,6 +299,7 @@ def get_admins():
     for admin in admins:
         admin_list.append(admin.as_dict())
 
+    session.close()
     ret_obj['admins'] = admin_list
     return ret_obj
 
@@ -307,6 +311,7 @@ def get_admin_by_id(id):
     session = DBSession()
     admin = session.get(Admin, id)
 
+    session.close()
     app.logger.info("Found admin:%s\n", str(admin))
     if admin == None:
         status = ("Admin with id {id} not found\n").format(id=id)
@@ -321,7 +326,6 @@ def delete_admin_by_id(id):
 
     session = DBSession()
     admin = session.query(Admin).filter_by(id=id).first()
-
     app.logger.info("Found admin:%s\n", str(admin))
     if admin == None:
         status = ("Admin with id {id} not found.\n").format(id=id)
@@ -363,6 +367,7 @@ def get_users():
 
     session = DBSession()
     users = session.query(User)
+    session.close()
     user_list = []
     for user in users:
         user_list.append(user.as_dict())
@@ -376,7 +381,7 @@ def get_user_by_id(id):
 
     session = DBSession()
     user = session.get(User, id)
-
+    session.close()
     app.logger.info("Found user:%s\n", str(user))
     if user == None:
         status = ("User with id {id} not found\n").format(id=id)
@@ -391,7 +396,6 @@ def delete_user_by_id(id):
 
     session = DBSession()
     user = session.query(User).filter_by(id=id).first()
-
     app.logger.info("Found user:%s\n", str(user))
     if user == None:
         status = ("User with id {id} not found.\n").format(id=id)
@@ -415,7 +419,6 @@ def add_city(admin_id):
 
     session = DBSession()
     admin = session.query(Admin).filter_by(id=admin_id).first()
-
     if admin == None:
         status = ("Admin with id {id} not found.\n").format(id=admin_id)
         return Response(status, status=404)
@@ -439,7 +442,6 @@ def get_cities(admin_id):
 
     session = DBSession()
     admin = session.query(Admin).filter_by(id=admin_id).first()
-
     if admin == None:
         status = ("Admin with id {id} not found.\n").format(id=admin_id)
         return Response(status, status=404)
@@ -459,7 +461,6 @@ def get_city(admin_id, city_id):
 
     session = DBSession()
     admin = session.query(Admin).filter_by(id=admin_id).first()
-
     if admin == None:
         status = ("Admin with id {id} not found.\n").format(id=admin_id)
         return Response(status, status=404)
