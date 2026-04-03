@@ -283,10 +283,9 @@ def add_admin():
         admin = Admin(name=name, password=password)
         session.add(admin)
         session.commit()
-
-    session.close()
-    return admin.as_dict()
-
+        result = admin.as_dict()
+        session.close()
+        return result
 
 @app.route("/admin")
 def get_admins():
