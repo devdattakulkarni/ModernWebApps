@@ -277,10 +277,6 @@ class ETL():
 
 etl = ETL()
 
-# Start the ETL process
-p = Process(target=etl.run)
-p.start()
-
 
 # https://stackoverflow.com/questions/19473250/how-to-get-user-email-after-oauth-with-google-api-python-client
 def get_user_info(credentials):
@@ -810,7 +806,7 @@ def authorize():
   # for the OAuth 2.0 client, which you configured in the API Console. If this
   # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
   # error.
-  redirect_uri = flask.url_for('oauth2callback', _external=True)
+  redirect_uri = flask.url_for('oauth2callback', _external=True) # /oauth2callback; https://localhost:5009/oauth2callback
   parts = redirect_uri.split("/oauth2callback")
   print(parts)
   if ":5009" not in redirect_uri:
@@ -824,10 +820,12 @@ def authorize():
       # re-prompting the user for permission. Recommended for web server apps.
       access_type='offline',
       # Enable incremental authorization. Recommended as a best practice.
-      include_granted_scopes='true')
+      include_granted_scopes='true',
+      code_challenge_method='S256')
 
   # Store the state so the callback can verify the auth server response.
   flask.session['state'] = state
+  flask.session['code_verifier'] = flow.code_verifier
   print("Authorization URL:" + authorization_url)
 
   return flask.redirect(authorization_url)
@@ -843,8 +841,10 @@ def oauth2callback():
       CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
   flow.redirect_uri = flask.url_for('oauth2callback', _external=True)
 
+  flow.code_verifier = flask.session['code_verifier']
+
   # Use the authorization server's response to fetch the OAuth 2.0 tokens.
-  authorization_response = flask.request.url
+  authorization_response = flask.request.url # Authorization code
   print("Authorization response:" + authorization_response)
   flow.fetch_token(authorization_response=authorization_response)
 
@@ -854,7 +854,7 @@ def oauth2callback():
   credentials = flow.credentials
   flask.session['credentials'] = credentials_to_dict(credentials)
 
-  return flask.redirect(flask.url_for('login'))
+  return flask.redirect(flask.url_for('login')) # Generate relative URL: /login
 
 
 
@@ -987,4 +987,9 @@ if __name__ == "__main__":
 
     app.debug = False
     app.logger.info('Portal started...')
+
+    # Start the ETL process
+    p = Process(target=etl.run)
+    p.start()
+
     app.run(host='0.0.0.0', port=5009, ssl_context='adhoc')
